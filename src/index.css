@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600&family=Mrs+Saint+Delafield&display=swap');
+
+:root {
+  --bg: #f5f5f5;
+  --bg-soft: #fafafa;
+  --bg-muted: #ececec;
+  --surface: #ffffff;
+  --ink: #2a2a2a;
+  --ink-soft: #5a5a5a;
+  --ink-faint: #8a8a8a;
+  --line: #dcdcdc;
+  --line-strong: #c4c4c4;
+  --accent: #3a3a3a;
+  --shadow: 0 18px 50px rgba(30, 30, 30, 0.08);
+  --nav-h: 72px;
+  --max: 1120px;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Manrope', sans-serif;
+  --script: 'Mrs Saint Delafield', cursive;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+}
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 400;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #ffffff 0%, transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, #efefef 0%, transparent 50%),
+    var(--bg);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.container {
+  width: min(100% - 2.5rem, var(--max));
+  margin-inline: auto;
+}
+
+.section {
+  padding: 6.5rem 0;
+}
+
+.section-label {
+  margin: 0 0 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.section-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.section-intro {
+  margin: 1rem 0 0;
+  max-width: 36rem;
+  color: var(--ink-soft);
+  font-weight: 300;
+  font-size: 1.02rem;
+}
+
+.section-head {
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4.5rem 0;
+  }
+
+  .container {
+    width: min(100% - 1.5rem, var(--max));
+  }
+}
