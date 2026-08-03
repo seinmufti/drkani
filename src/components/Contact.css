@@ -160,6 +160,7 @@
 .contact__plants--edge::after {
   left: 18%;
   right: 12%;
+  bottom: 0.15rem;
   height: 0.7rem;
 }
 
@@ -208,7 +209,7 @@
 
 .contact__plants--edge {
   left: auto;
-  right: -8.25rem;
+  right: -6.5rem;
   bottom: 0;
   transform: none;
   z-index: 4;
@@ -216,8 +217,10 @@
 }
 
 .contact__pot--edge {
-  width: clamp(8.5rem, 13vw, 12rem);
+  width: clamp(5.5rem, 8.5vw, 7.75rem);
   height: auto;
+  transform: scaleY(1.25);
+  transform-origin: bottom center;
 }
 
 @media (max-width: 900px) {

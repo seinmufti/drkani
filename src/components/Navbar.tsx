@@ -27,6 +27,15 @@ export function Navbar() {
     }
   }, [open])
 
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [open])
+
   return (
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <div className="container nav__inner">
@@ -39,13 +48,18 @@ export function Navbar() {
           type="button"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
+          aria-controls="primary-nav"
           onClick={() => setOpen((v) => !v)}
         >
           <span />
           <span />
         </button>
 
-        <nav className={`nav__links ${open ? 'nav__links--open' : ''}`} aria-label="Primary">
+        <nav
+          id="primary-nav"
+          className={`nav__links ${open ? 'nav__links--open' : ''}`}
+          aria-label="Primary"
+        >
           {links.map((link) => (
             <a
               key={link.href}
