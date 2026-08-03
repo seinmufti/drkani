@@ -7,7 +7,6 @@ type BeforeAfterProps = {
   beforeAlt?: string
   afterAlt?: string
   title: string
-  caption?: string
 }
 
 export function BeforeAfter({
@@ -16,7 +15,6 @@ export function BeforeAfter({
   beforeAlt = 'Before treatment',
   afterAlt = 'After treatment',
   title,
-  caption,
 }: BeforeAfterProps) {
   const frameRef = useRef<HTMLDivElement>(null)
   const dragging = useRef(false)
@@ -52,7 +50,6 @@ export function BeforeAfter({
     <article className="ba">
       <div className="ba__meta">
         <h3 className="ba__title">{title}</h3>
-        {caption ? <p className="ba__caption">{caption}</p> : null}
       </div>
 
       <div

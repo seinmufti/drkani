@@ -24,7 +24,7 @@ export function About() {
 
         <figure className="about__portrait">
           <img
-            src="/dr-kani.jpg"
+            src="/dr-kani.jpg?v=2"
             alt="Dr. Kani in the clinic"
             width={900}
             height={1200}

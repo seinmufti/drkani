@@ -38,12 +38,7 @@ export function Certificates() {
     <section id="certificates" className="certificates section">
       <div className="container">
         <header className="section-head certificates__head">
-          <p className="section-label">Credentials</p>
           <h2 className="section-title">Certificate wall</h2>
-          <p className="section-intro">
-            A quiet gallery of training and clinical certifications — update
-            titles, issuers, and years to match Dr. Kani&apos;s credentials.
-          </p>
         </header>
       </div>
 

@@ -1,7 +1,7 @@
 .contact {
   position: relative;
-  padding-bottom: 8.5rem;
-  overflow: hidden;
+  padding-bottom: 1.75rem;
+  overflow: visible;
 }
 
 .contact__grid {
@@ -10,19 +10,28 @@
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(2rem, 5vw, 4rem);
-  align-items: start;
+  align-items: stretch;
 }
 
 .contact__copy,
 .contact__side {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+}
+
+.contact__side {
+  overflow: visible;
 }
 
 .contact__details {
   margin: 2.5rem 0 0;
   display: grid;
   gap: 1.25rem;
+  position: relative;
+  z-index: 1;
 }
 
 .contact__details div {
@@ -54,6 +63,8 @@
   padding: 1.75rem;
   background: var(--surface);
   border: 1px solid var(--line);
+  position: relative;
+  z-index: 1;
 }
 
 .contact__field {
@@ -113,47 +124,105 @@
 
 .contact__plants {
   position: absolute;
+  left: auto;
+  right: -14%;
   bottom: 0;
-  z-index: 0;
   display: flex;
   align-items: flex-end;
+  justify-content: flex-end;
+  gap: 0;
+  width: max-content;
+  max-width: none;
   pointer-events: none;
   user-select: none;
+  z-index: 0;
+  transform: translateX(10%);
 }
 
-.contact__plants--left {
-  left: max(0.5rem, calc((100% - var(--max)) / 2 - 4rem));
-  gap: 1.4rem;
+.contact__plants::after {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 6%;
+  bottom: 0.15rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(45, 42, 38, 0.18) 0%,
+    rgba(45, 42, 38, 0.08) 45%,
+    transparent 72%
+  );
+  z-index: -1;
+  pointer-events: none;
 }
 
-.contact__plants--right {
-  right: max(0.75rem, calc((100% - var(--max)) / 2 - 2rem));
+.contact__plants--edge::after {
+  left: 18%;
+  right: 12%;
+  height: 0.7rem;
+}
+
+.contact__copy .section-title,
+.contact__copy .section-intro {
+  position: relative;
+  z-index: 1;
 }
 
 .contact__pot {
   display: block;
-  opacity: 0.95;
+  object-fit: contain;
+  object-position: bottom center;
+  opacity: 1;
+  filter:
+    drop-shadow(0 1px 1px rgba(40, 38, 35, 0.12))
+    drop-shadow(0 6px 4px rgba(40, 38, 35, 0.14))
+    drop-shadow(0 14px 12px rgba(40, 38, 35, 0.12))
+    drop-shadow(2px 22px 16px rgba(40, 38, 35, 0.1));
+}
+
+.contact__pot--xs {
+  width: clamp(5.75rem, 9vw, 8rem);
+  height: auto;
+  margin-right: -1.15rem;
+  position: relative;
+  z-index: 0;
 }
 
 .contact__pot--lg {
-  width: clamp(10rem, 16vw, 15rem);
+  width: clamp(9.5rem, 15vw, 13.5rem);
   height: auto;
-}
-
-.contact__pot--md {
-  width: clamp(8.5rem, 13vw, 12.5rem);
-  height: auto;
+  margin-right: -1.75rem;
+  position: relative;
+  z-index: 1;
 }
 
 .contact__pot--sm {
-  width: clamp(8rem, 12vw, 11.5rem);
+  width: clamp(7.25rem, 11.5vw, 10rem);
   height: auto;
-  transform: translateY(0.6rem);
+  margin-right: 0;
+  position: relative;
+  left: -2rem;
+  z-index: 3;
+}
+
+.contact__plants--edge {
+  left: auto;
+  right: -8.25rem;
+  bottom: 0;
+  transform: none;
+  z-index: 4;
+  justify-content: flex-end;
+}
+
+.contact__pot--edge {
+  width: clamp(8.5rem, 13vw, 12rem);
+  height: auto;
 }
 
 @media (max-width: 900px) {
   .contact {
-    padding-bottom: 7rem;
+    padding-bottom: 1.5rem;
   }
 
   .contact__grid {
@@ -164,24 +233,7 @@
     padding: 1.25rem;
   }
 
-  .contact__plants--left {
-    left: 0.4rem;
-    gap: 0.6rem;
-  }
-
-  .contact__plants--right {
-    right: 0.4rem;
-  }
-
-  .contact__pot--lg {
-    width: 7.5rem;
-  }
-
-  .contact__pot--md {
-    width: 6.5rem;
-  }
-
-  .contact__pot--sm {
-    width: 6rem;
+  .contact__plants {
+    display: none;
   }
 }
