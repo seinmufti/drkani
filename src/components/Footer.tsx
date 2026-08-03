@@ -12,9 +12,12 @@ export function Footer() {
         </p>
 
         <p className="footer__credit">
-          <NordlysMark className="footer__mark" />
           <span className="footer__credit-text">
-            Developed by <strong>nordlys</strong>
+            Developed by{' '}
+            <span className="footer__credit-brand">
+              <strong>nordlys</strong>
+              <NordlysMark className="footer__mark" />
+            </span>
           </span>
         </p>
       </div>

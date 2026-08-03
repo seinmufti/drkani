@@ -103,18 +103,27 @@
     display: block;
   }
 
+  /* absolute (not fixed): .nav backdrop-filter would collapse fixed+inset to ~padding height */
   .nav__links {
-    position: fixed;
-    inset: var(--nav-h) 0 0;
-    z-index: 1;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
     gap: 0;
+    height: calc(100dvh - var(--nav-h));
+    max-height: calc(100dvh - var(--nav-h));
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 0.35rem 0 1.75rem;
-    /* Solid opaque panel — do not fade panel opacity (keeps bg non-transparent) */
-    background-color: var(--surface);
+    /* Opaque light gray panel — animate transform/visibility only, never opacity */
+    background-color: var(--bg-soft);
     background-image: none;
+    opacity: 1;
     border-top: 1px solid var(--line);
     box-shadow: var(--shadow);
     transform: translateY(-0.75rem);
@@ -129,6 +138,8 @@
     transform: translateY(0);
     pointer-events: auto;
     visibility: visible;
+    opacity: 1;
+    background-color: var(--bg-soft);
     transition:
       transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
       visibility 0s linear 0s;
@@ -179,7 +190,7 @@
 
   .nav__link:hover,
   .nav__link:active {
-    background: var(--bg-soft);
+    background: var(--bg-muted);
     color: var(--ink);
   }
 }

@@ -9,6 +9,19 @@
   box-sizing: border-box;
 }
 
+/* Owns the About → Results separator (Results drops its top rule) */
+.about.section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--morse-h);
+  background: var(--morse-rule);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .about__grid.container {
   /* Keep a small left inset; flush the portrait to the right window edge */
   width: auto;
@@ -76,10 +89,20 @@
 .about__copy {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 0;
   padding-left: 0;
   padding-right: 0.35rem;
+}
+
+.about__body {
+  /* Desktop: no muted band; flush with intro/title left edge */
+  padding: 1.25rem 0 0;
+  text-align: left;
+}
+
+.about__body .section-label {
+  margin: 0 0 0.85rem;
 }
 
 .about__portrait {
@@ -109,7 +132,8 @@
     height: auto;
     max-height: none;
     overflow: visible;
-    padding: 0 0 3.75rem;
+    /* Keep top flush for portrait layout; equal bottom air before separator */
+    padding: 0 0 2rem;
   }
 
   .about__grid.container {
@@ -125,8 +149,22 @@
     height: auto;
   }
 
+  /* Flatten so intro / portrait / body can reorder as grid siblings */
+  .about__copy {
+    display: contents;
+  }
+
+  .about__intro {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.85rem 0.15rem 0;
+  }
+
   .about__portrait {
-    order: -1;
+    order: 2;
     width: 100vw;
     height: auto;
     margin-left: calc(50% - 50vw);
@@ -136,21 +174,26 @@
     border-bottom: 1px solid var(--line);
   }
 
+  .about__body {
+    order: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* Full-bleed gray band; inner padding keeps text/CTA readable */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    box-sizing: border-box;
+    background: var(--bg-muted);
+    padding: 1.35rem 1.25rem 1.35rem;
+  }
+
   .about__portrait img {
     object-position: 52% 48%;
   }
 
-  .about__copy {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
-    padding: 1.85rem 0.15rem 0;
-  }
-
-  .about__copy .section-label {
-    margin-bottom: 0.55rem;
+  .about__body .section-label {
+    margin-bottom: 0.7rem;
   }
 
   .about__name {
@@ -159,7 +202,7 @@
   }
 
   .about__role {
-    margin: 0.7rem 0 1.35rem;
+    margin: 0.7rem 0 1.25rem;
     font-size: 0.7rem;
     letter-spacing: 0.16em;
     max-width: 22rem;
@@ -191,7 +234,7 @@
     max-height: 240px;
   }
 
-  .about__copy {
+  .about__intro {
     padding-top: 1.5rem;
   }
 

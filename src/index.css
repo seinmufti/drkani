@@ -17,6 +17,14 @@
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'Manrope', sans-serif;
   --script: 'Mrs Saint Delafield', cursive;
+  /*
+   * Morse section rule: single word KANI, once per separator.
+   * Proportions (viewBox units): dot=4, dash=12, intra-letter gap=4,
+   * inter-letter gap=12. K (-.-) A (.-) N (-.) I (..) → 124 units wide.
+   */
+  --morse-h: 3px;
+  --morse-rule: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='124' height='3' fill='%23c4c4c4'%3E%3Crect x='0' width='12' height='3'/%3E%3Crect x='16' width='4' height='3'/%3E%3Crect x='24' width='12' height='3'/%3E%3Crect x='48' width='4' height='3'/%3E%3Crect x='56' width='12' height='3'/%3E%3Crect x='80' width='12' height='3'/%3E%3Crect x='96' width='4' height='3'/%3E%3Crect x='112' width='4' height='3'/%3E%3Crect x='120' width='4' height='3'/%3E%3C/svg%3E")
+    center / 85% var(--morse-h) no-repeat;
 }
 
 *,
@@ -28,6 +36,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-h) + 16px);
+  /* Keep layout width stable when menu locks body scroll (no scrollbar jump) */
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -71,7 +81,20 @@ textarea {
 }
 
 .section {
-  padding: 6.5rem 0;
+  position: relative;
+  padding: 2.5rem 0;
+}
+
+/* Morse-code separators between sections (skip first / About) */
+.section:not(:first-of-type)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--morse-h);
+  background: var(--morse-rule);
+  pointer-events: none;
 }
 
 .section-label {
@@ -107,7 +130,7 @@ textarea {
 
 @media (max-width: 768px) {
   .section {
-    padding: 4.5rem 0;
+    padding: 2rem 0;
   }
 
   .container {

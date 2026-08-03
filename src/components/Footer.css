@@ -1,7 +1,18 @@
 .footer {
-  border-top: 1px solid var(--line);
+  position: relative;
   padding: 1.15rem 0;
   background: #f7f7f7;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--morse-h);
+  background: var(--morse-rule);
+  pointer-events: none;
 }
 
 .footer__inner {
@@ -31,9 +42,6 @@
 }
 
 .footer__credit {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
   margin: 0;
   color: var(--ink-soft);
   font-size: 0.8rem;
@@ -50,6 +58,12 @@
   color: var(--ink);
 }
 
+.footer__credit-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .footer__mark {
   width: 1.55rem;
   height: auto;
@@ -63,7 +77,7 @@
 
 @media (max-width: 700px) {
   .footer {
-    padding: 1.1rem 0 1.35rem;
+    padding: 1.15rem 0;
   }
 
   .footer__inner {

@@ -1,7 +1,5 @@
 .certificates {
   background: transparent;
-  padding-top: 3.5rem;
-  padding-bottom: 0;
   width: 100%;
   max-width: none;
   overflow: visible;
@@ -15,7 +13,7 @@
 .wall {
   position: relative;
   width: 100%;
-  padding: 3rem 0 3.5rem;
+  padding: 2.5rem 0;
   isolation: isolate;
   border-top: 1px solid #7a4534;
   border-bottom: 1px solid #7a4534;
@@ -119,8 +117,12 @@
 }
 
 @media (max-width: 900px) {
+  .certificates__head {
+    margin-bottom: 1rem;
+  }
+
   .wall {
-    padding: 2rem 0 2.5rem;
+    padding: 2rem 0;
   }
 
   .wall__inner {
@@ -136,7 +138,7 @@
 
 @media (max-width: 560px) {
   .wall {
-    padding: 1.5rem 0 2rem;
+    padding: 1.5rem 0;
   }
 
   .wall__inner {

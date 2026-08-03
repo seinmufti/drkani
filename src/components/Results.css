@@ -1,7 +1,11 @@
 .results {
-  padding-bottom: 5.5rem;
   background:
     linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.55) 18%, rgba(255, 255, 255, 0.55) 82%, transparent 100%);
+}
+
+/* Separator lives on About's ::after — avoid a double line */
+#results.section::before {
+  content: none;
 }
 
 .results__grid {
@@ -11,6 +15,10 @@
 }
 
 @media (max-width: 900px) {
+  .results .section-head {
+    margin-bottom: 1rem;
+  }
+
   .results__grid {
     grid-template-columns: 1fr;
     gap: 2.25rem;

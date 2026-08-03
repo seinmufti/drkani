@@ -1,6 +1,5 @@
 .contact {
   position: relative;
-  padding-bottom: 1.75rem;
   overflow: visible;
 }
 
@@ -51,6 +50,8 @@
   margin: 0;
   color: var(--ink);
   font-weight: 400;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .contact__details a:hover {
@@ -222,12 +223,17 @@
 }
 
 @media (max-width: 900px) {
-  .contact {
-    padding-bottom: 1.5rem;
-  }
-
   .contact__grid {
     grid-template-columns: 1fr;
+  }
+
+  .contact__copy .section-intro {
+    display: none;
+  }
+
+  .contact__details {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem 1rem;
   }
 
   .contact__form {
