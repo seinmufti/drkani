@@ -26,7 +26,7 @@
 }
 
 .contact__details {
-  margin: 2.5rem 0 0;
+  margin: 1.25rem 0 0;
   display: grid;
   gap: 1.25rem;
   position: relative;
@@ -87,9 +87,19 @@
   border: 1px solid var(--line);
   background: var(--bg-soft);
   color: var(--ink);
-  padding: 0.85rem 0.95rem;
+  padding: 0.5rem 0.85rem;
   outline: none;
   resize: vertical;
+}
+
+.contact__field input {
+  min-height: 2.5rem;
+  box-sizing: border-box;
+}
+
+.contact__field textarea {
+  min-height: 5.5rem;
+  box-sizing: border-box;
 }
 
 .contact__field input:focus,
@@ -225,13 +235,17 @@
 @media (max-width: 900px) {
   .contact__grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .contact__copy .section-intro {
     display: none;
+    margin: 0;
   }
 
   .contact__details {
+    margin-top: 0.75rem;
+    margin-bottom: 0;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem 1rem;
   }

@@ -50,10 +50,30 @@ export function Certificates() {
               className={`wall__frame wall__frame--${(index % 3) + 1}`}
             >
               <div className="wall__mat">
-                <div className="wall__seal" aria-hidden="true" />
+                <p className="wall__eyebrow">Certificate</p>
                 <h3 className="wall__title">{cert.title}</h3>
                 <p className="wall__issuer">{cert.issuer}</p>
-                <p className="wall__year">{cert.year}</p>
+
+                <div className="wall__footer">
+                  <div className="wall__sign">
+                    <span className="wall__flourish" aria-hidden="true">
+                      Dr. Kani
+                    </span>
+                    <span className="wall__sign-line" aria-hidden="true" />
+                    <span className="wall__sign-label">Authorized</span>
+                  </div>
+
+                  <div className="wall__ribbon" aria-hidden="true">
+                    <span className="wall__ribbon-tails" />
+                    <span className="wall__ribbon-seal" />
+                  </div>
+
+                  <div className="wall__date">
+                    <span className="wall__year">{cert.year}</span>
+                    <span className="wall__date-line" aria-hidden="true" />
+                    <span className="wall__date-label">Awarded</span>
+                  </div>
+                </div>
               </div>
             </article>
           ))}

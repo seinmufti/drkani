@@ -68,7 +68,7 @@ export function Contact() {
 
             <label className="contact__field">
               <span>Message</span>
-              <textarea name="message" rows={5} required />
+              <textarea name="message" rows={3} required />
             </label>
 
             <button className="contact__submit" type="submit">

@@ -8,6 +8,10 @@
   content: none;
 }
 
+.results .section-head {
+  margin-bottom: 1.25rem;
+}
+
 .results__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -16,7 +20,7 @@
 
 @media (max-width: 900px) {
   .results .section-head {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
 
   .results__grid {

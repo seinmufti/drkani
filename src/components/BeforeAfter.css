@@ -1,20 +1,32 @@
 .ba {
   display: grid;
-  gap: 1.25rem;
+  gap: 0.4rem;
 }
 
 .ba__meta {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  margin: 0;
 }
 
 .ba__title {
   margin: 0;
   font-family: var(--serif);
-  font-size: 1.7rem;
+  font-size: 1.4rem;
   font-weight: 500;
   letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+@media (min-width: 901px) {
+  .ba {
+    gap: 1rem;
+  }
+
+  .ba__title {
+    font-size: 1.55rem;
+  }
 }
 
 .ba__caption {
