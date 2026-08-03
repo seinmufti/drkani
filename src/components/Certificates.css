@@ -43,8 +43,9 @@
 .wall__inner {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.2rem;
+  gap: 3.5rem 3rem;
   align-items: start;
+  padding-block: 0.5rem;
 }
 
 /* Outer frame — slim silver moulding */
@@ -54,18 +55,11 @@
   border: 1px solid #b8b2a6;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.7) inset,
-    0 12px 24px rgba(20, 18, 16, 0.26);
+    0 2px 4px rgba(40, 18, 12, 0.2),
+    0 10px 18px rgba(20, 14, 10, 0.28);
   padding: 0.4rem;
-  aspect-ratio: 1.55 / 1;
+  aspect-ratio: 1.28 / 1;
   min-height: 0;
-}
-
-.wall__frame--2 {
-  transform: translateY(0.4rem);
-}
-
-.wall__frame--3 {
-  transform: translateY(0.15rem);
 }
 
 /* Cream paper with double ornate border */
@@ -258,7 +252,7 @@
   #certificates.certificates.section {
     display: flex;
     flex-direction: column;
-    min-height: calc(100dvh - var(--nav-h) + 1.25rem);
+    min-height: calc(100dvh - var(--nav-h) + 2.5rem);
     /* Air under Results→Certificates Morse ::before before the title */
     padding-top: 1.35rem;
     /* Air under brick wall before Contact’s Morse ::before */
@@ -276,29 +270,25 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1rem 0;
+    padding: 2.15rem 0;
   }
 
   /* Near full-bleed: override .container gutters so cards grow */
   .wall__inner.container {
-    width: min(100% - 0.5rem, var(--max));
+    width: min(100% - 1rem, var(--max));
   }
 
   /* Mobile: 2 cols × 3 rows (all 6 certs) */
   .wall__inner {
     width: 100%;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.65rem;
+    gap: 2.1rem 1.85rem;
+    padding-block: 0.35rem;
   }
 
   .wall__frame {
     padding: 0.28rem;
-    aspect-ratio: 1.55 / 1;
-  }
-
-  .wall__frame--2,
-  .wall__frame--3 {
-    transform: none;
+    aspect-ratio: 1.28 / 1;
   }
 
   .wall__mat {
@@ -372,20 +362,21 @@
 
 @media (max-width: 560px) {
   .wall {
-    padding: 0.75rem 0;
+    padding: 1.65rem 0;
   }
 
   .wall__inner.container {
-    width: min(100% - 0.4rem, var(--max));
+    width: min(100% - 0.85rem, var(--max));
   }
 
   .wall__inner {
-    gap: 0.5rem;
+    gap: 1.75rem 1.5rem;
+    padding-block: 0.25rem;
   }
 
   .wall__frame {
     padding: 0.24rem;
-    aspect-ratio: 1.5 / 1;
+    aspect-ratio: 1.25 / 1;
   }
 
   .wall__mat {

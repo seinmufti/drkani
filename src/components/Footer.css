@@ -1,18 +1,12 @@
 .footer {
   position: relative;
   padding: 1.15rem 0;
-  background: #f7f7f7;
+  background: var(--ink);
+  color: #e8e8e8;
 }
 
 .footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--morse-h);
-  background: var(--morse-rule);
-  pointer-events: none;
+  content: none;
 }
 
 .footer__inner {
@@ -29,6 +23,7 @@
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0.04em;
+  color: #f2f2f2;
   transform: rotate(-3deg);
   transform-origin: left center;
   flex-shrink: 0;
@@ -37,25 +32,25 @@
 .footer__copy {
   margin: 0;
   font-size: 0.8rem;
-  color: var(--ink-faint);
+  color: #a8a8a8;
   text-align: center;
 }
 
 .footer__credit {
   margin: 0;
-  color: var(--ink-soft);
+  color: #b8b8b8;
   font-size: 0.8rem;
   letter-spacing: 0.02em;
   flex-shrink: 0;
 }
 
 .footer__credit:hover {
-  color: var(--ink);
+  color: #f2f2f2;
 }
 
 .footer__credit strong {
   font-weight: 600;
-  color: var(--ink);
+  color: #f2f2f2;
 }
 
 .footer__credit-brand {
@@ -69,6 +64,7 @@
   height: auto;
   display: block;
   flex-shrink: 0;
+  filter: invert(1);
 }
 
 .footer__credit-text {
