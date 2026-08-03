@@ -219,8 +219,6 @@
 .contact__pot--edge {
   width: clamp(5.5rem, 8.5vw, 7.75rem);
   height: auto;
-  transform: scaleY(1.25);
-  transform-origin: bottom center;
 }
 
 @media (max-width: 900px) {

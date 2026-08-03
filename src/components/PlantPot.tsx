@@ -6,14 +6,14 @@ type PlantPotProps = {
 const sources = {
   leafy: '/plants/left.png?v=leaves',
   round: '/plants/middle.png',
-  trail: '/plants/right.png?v=upright',
+  trail: '/plants/right.png?v=stem',
   small: '/plants/small.png?v=leaves',
 } as const
 
 const labels = {
   leafy: 'White pot with leafy plant',
   round: 'White pot with round plant',
-  trail: 'White pot with upright plant',
+  trail: 'White pot with tall stemmed plant',
   small: 'White pot with small plant',
 } as const
 
