@@ -7,6 +7,14 @@ type BeforeAfterProps = {
   beforeAlt?: string
   afterAlt?: string
   title: string
+  /** Overrides `.ba__img` object-position on the before image only. */
+  beforeObjectPosition?: string
+  /** Absolute CSS scale for the before image (default CSS scale is 1.035). */
+  beforeScale?: number
+  /** Overrides `.ba__img` object-position on the after image only. */
+  afterObjectPosition?: string
+  /** Absolute CSS scale for the after image (default CSS scale is 1.035). */
+  afterScale?: number
 }
 
 export function BeforeAfter({
@@ -15,6 +23,10 @@ export function BeforeAfter({
   beforeAlt = 'Before treatment',
   afterAlt = 'After treatment',
   title,
+  beforeObjectPosition,
+  beforeScale,
+  afterObjectPosition,
+  afterScale,
 }: BeforeAfterProps) {
   const frameRef = useRef<HTMLDivElement>(null)
   const dragging = useRef(false)
@@ -60,12 +72,30 @@ export function BeforeAfter({
           updateFromClientX(event.clientX)
         }}
       >
-        <img className="ba__img" src={afterSrc} alt={afterAlt} draggable={false} />
+        <img
+          className="ba__img"
+          src={afterSrc}
+          alt={afterAlt}
+          draggable={false}
+          style={{
+            ...(afterObjectPosition ? { objectPosition: afterObjectPosition } : {}),
+            ...(afterScale != null ? { transform: `scale(${afterScale})` } : {}),
+          }}
+        />
         <div
           className="ba__before"
           style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
         >
-          <img className="ba__img" src={beforeSrc} alt={beforeAlt} draggable={false} />
+          <img
+            className="ba__img"
+            src={beforeSrc}
+            alt={beforeAlt}
+            draggable={false}
+            style={{
+              ...(beforeObjectPosition ? { objectPosition: beforeObjectPosition } : {}),
+              ...(beforeScale != null ? { transform: `scale(${beforeScale})` } : {}),
+            }}
+          />
         </div>
 
         <div className="ba__handle" style={{ left: `${position}%` }} aria-hidden="true">
