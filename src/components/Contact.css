@@ -233,9 +233,34 @@
 }
 
 @media (max-width: 900px) {
+  #contact.contact.section {
+    display: flex;
+    flex-direction: column;
+    /* Extra space below Morse ::before (shared default is 2×gap + morse-h) */
+    padding-top: calc(var(--section-gap) * 3.5 + var(--morse-h));
+    /* Clear white gap above footer grass (grass stays on .footer, not inside Contact) */
+    padding-bottom: clamp(2.75rem, 6vh, 4rem);
+  }
+
+  /* .container is also .contact__grid — height follows content (no empty flex gap) */
   .contact__grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: clamp(1.5rem, 3vh, 2rem);
+    min-height: 0;
+    height: auto;
+    box-sizing: border-box;
+    align-content: start;
+  }
+
+  .contact__copy,
+  .contact__side {
+    min-height: 0;
+  }
+
+  .contact__side {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
   }
 
   .contact__copy .section-intro {
@@ -243,15 +268,65 @@
     margin: 0;
   }
 
+  .contact__copy .section-title {
+    margin: 0;
+  }
+
   .contact__details {
-    margin-top: 0.75rem;
+    margin-top: clamp(1.25rem, 2.5vh, 1.5rem);
     margin-bottom: 0;
     grid-template-columns: 1fr 1fr;
-    gap: 1.25rem 1rem;
+    gap: clamp(0.55rem, 1.6vh, 1rem) clamp(0.65rem, 3vw, 1rem);
+  }
+
+  .contact__details dt {
+    font-size: clamp(0.58rem, 2.3vw, 0.68rem);
+  }
+
+  .contact__details dd {
+    font-size: clamp(0.82rem, 3.3vw, 0.95rem);
   }
 
   .contact__form {
-    padding: 1.25rem;
+    flex: 0 0 auto;
+    margin: 0;
+    min-height: 0;
+    padding: clamp(0.85rem, 2.2vh, 1.2rem) clamp(0.9rem, 3.5vw, 1.2rem);
+    gap: clamp(0.55rem, 1.5vh, 0.9rem);
+    display: grid;
+    align-content: start;
+  }
+
+  .contact__field {
+    gap: clamp(0.25rem, 0.7vh, 0.4rem);
+  }
+
+  .contact__field span {
+    font-size: clamp(0.6rem, 2.4vw, 0.7rem);
+  }
+
+  .contact__field input {
+    min-height: clamp(2.1rem, 5.5vh, 2.45rem);
+    padding: clamp(0.35rem, 1vh, 0.5rem) clamp(0.65rem, 2.5vw, 0.85rem);
+  }
+
+  .contact__field textarea {
+    min-height: clamp(3.25rem, 10vh, 5rem);
+    max-height: 14vh;
+    padding: clamp(0.35rem, 1vh, 0.5rem) clamp(0.65rem, 2.5vw, 0.85rem);
+    resize: none;
+  }
+
+  .contact__submit {
+    margin-top: clamp(0.15rem, 0.5vh, 0.3rem);
+    padding: clamp(0.7rem, 1.8vh, 0.9rem) clamp(1rem, 4vw, 1.3rem);
+    font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .contact__note {
+    font-size: clamp(0.78rem, 3vw, 0.9rem);
   }
 
   .contact__plants {

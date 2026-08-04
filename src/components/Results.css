@@ -3,7 +3,7 @@
     linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.55) 18%, rgba(255, 255, 255, 0.55) 82%, transparent 100%);
 }
 
-/* Separator lives on About's ::after — avoid a double line */
+/* Separator lives on About's ::after — avoid a double line (desktop) */
 #results.section::before {
   content: none;
 }
@@ -19,12 +19,49 @@
 }
 
 @media (max-width: 900px) {
+  /* Morse rhythm from shared .section rules (About ::after is off on mobile) */
+  #results.section::before {
+    content: '';
+  }
+
+  #results.results.section {
+    display: flex;
+    flex-direction: column;
+    /* Extra space below Morse ::before (shared default is 2×gap + morse-h) */
+    padding-top: calc(var(--section-gap) * 3.5 + var(--morse-h));
+  }
+
+  #results.results.section > .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: var(--section-screen);
+    max-height: var(--section-screen);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
   .results .section-head {
-    margin-bottom: 0.75rem;
+    flex: 0 0 auto;
+    margin-bottom: clamp(0.3rem, 1vh, 0.55rem);
+  }
+
+  .results .section-title {
+    font-size: clamp(1.55rem, 6.5vw, 2.15rem);
   }
 
   .results__grid {
+    flex: 1 1 0;
+    min-height: 0;
     grid-template-columns: 1fr;
-    gap: 2.25rem;
+    /* minmax(0,1fr) lets rows shrink below frame aspect/min-content */
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(0.4rem, 1.2vh, 0.75rem);
+    align-content: stretch;
+  }
+
+  .results__grid > .ba {
+    min-height: 0;
+    overflow: hidden;
   }
 }

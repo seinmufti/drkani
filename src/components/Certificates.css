@@ -13,8 +13,8 @@
 .wall {
   position: relative;
   width: 100%;
-  padding: 3.75rem 0;
-  min-height: 22rem;
+  padding: 3rem 0;
+  min-height: 20rem;
   isolation: isolate;
   border-top: 1px solid #7a4534;
   border-bottom: 1px solid #7a4534;
@@ -248,194 +248,142 @@
 }
 
 @media (max-width: 900px) {
-  /* Head + wall fill the viewport under the nav; wall grows into leftover space */
+  /*
+   * Content (head + wall) = --section-screen so the brick wall
+   * bottom aligns with the viewport bottom below the nav.
+   * Outer padding from shared .section supplies space → Morse → space.
+   */
   #certificates.certificates.section {
     display: flex;
     flex-direction: column;
-    min-height: calc(100dvh - var(--nav-h) + 2.5rem);
-    /* Air under Results→Certificates Morse ::before before the title */
-    padding-top: 1.35rem;
-    /* Air under brick wall before Contact’s Morse ::before */
-    padding-bottom: 1.25rem;
+    box-sizing: border-box;
+    /* Extra space below Morse ::before (shared default is 2×gap + morse-h) */
+    padding-top: calc(var(--section-gap) * 3.5 + var(--morse-h));
+    /* border-box: paddings + content = one mobile screen under the nav */
+    height: calc(
+      var(--section-screen) + (var(--section-gap) * 3.5 + var(--morse-h)) + var(--section-gap)
+    );
+    max-height: calc(
+      var(--section-screen) + (var(--section-gap) * 3.5 + var(--morse-h)) + var(--section-gap)
+    );
+    overflow: hidden;
+  }
+
+  #certificates.certificates.section > .container {
+    flex: 0 0 auto;
+    padding-block: clamp(0.35rem, 1.2vh, 0.75rem) 0;
   }
 
   .certificates__head {
-    /* Air between title block and brick top (was glued at 0.4rem) */
-    margin-bottom: 1.1rem;
+    margin-bottom: clamp(1.5rem, 2.5vh, 2rem);
   }
 
   .wall {
-    flex: 1;
+    flex: 1 1 0;
     min-height: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 2.15rem 0;
+    padding: clamp(0.45rem, 1.4vh, 1rem) 0;
   }
 
-  /* Near full-bleed: override .container gutters so cards grow */
   .wall__inner.container {
-    width: min(100% - 1rem, var(--max));
+    width: min(100% - 3.5vw, var(--max));
   }
 
-  /* Mobile: 2 cols × 3 rows (all 6 certs) */
+  /* 2 × 3 cert grid */
   .wall__inner {
     width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2.1rem 1.85rem;
-    padding-block: 0.35rem;
+    gap: clamp(0.85rem, 2.4vh, 1.65rem) clamp(0.75rem, 3.2vw, 1.5rem);
+    padding-block: clamp(0.15rem, 0.5vh, 0.3rem);
+    align-content: center;
   }
 
   .wall__frame {
-    padding: 0.28rem;
+    padding: clamp(0.16rem, 0.65vw, 0.26rem);
     aspect-ratio: 1.28 / 1;
+    min-height: 0;
   }
 
   .wall__mat {
-    padding: 0.4rem 0.45rem 0.32rem;
-    gap: 0.08rem;
+    padding: clamp(0.22rem, 1vw, 0.36rem) clamp(0.26rem, 1.2vw, 0.42rem) clamp(0.18rem, 0.8vw, 0.28rem);
+    gap: clamp(0.03rem, 0.25vh, 0.07rem);
     box-shadow:
       inset 0 0 0 2px #faf7f0,
       inset 0 0 0 3px #b9ae97;
   }
 
   .wall__eyebrow {
-    font-size: 0.46rem;
-    letter-spacing: 0.2em;
+    font-size: clamp(0.36rem, 1.55vw, 0.46rem);
+    letter-spacing: 0.18em;
   }
 
   .wall__title {
-    font-size: 0.78rem;
+    font-size: clamp(0.58rem, 2.8vw, 0.8rem);
     max-width: none;
-  }
-
-  .wall__issuer {
-    font-size: 0.56rem;
-  }
-
-  .wall__footer {
-    margin-top: 0.22rem;
-    gap: 0.15rem 0.25rem;
-  }
-
-  .wall__flourish {
-    font-size: 0.9rem;
-  }
-
-  .wall__sign-line,
-  .wall__date-line {
-    max-width: 3rem;
-  }
-
-  .wall__sign-label,
-  .wall__date-label {
-    font-size: 0.4rem;
-    letter-spacing: 0.1em;
-  }
-
-  .wall__year {
-    font-size: 0.66rem;
-  }
-
-  .wall__ribbon {
-    width: 1.7rem;
-    height: 1.9rem;
-  }
-
-  .wall__ribbon-seal {
-    width: 1.35rem;
-    height: 1.35rem;
-  }
-
-  .wall__ribbon-tails {
-    top: 0.85rem;
-    width: 0.85rem;
-    height: 0.95rem;
-  }
-
-  .wall__ribbon-tails::before,
-  .wall__ribbon-tails::after {
-    width: 0.38rem;
-    height: 0.9rem;
-  }
-}
-
-@media (max-width: 560px) {
-  .wall {
-    padding: 1.65rem 0;
-  }
-
-  .wall__inner.container {
-    width: min(100% - 0.85rem, var(--max));
-  }
-
-  .wall__inner {
-    gap: 1.75rem 1.5rem;
-    padding-block: 0.25rem;
-  }
-
-  .wall__frame {
-    padding: 0.24rem;
-    aspect-ratio: 1.25 / 1;
-  }
-
-  .wall__mat {
-    padding: 0.32rem 0.35rem 0.28rem;
-    gap: 0.06rem;
-  }
-
-  .wall__eyebrow {
-    font-size: 0.42rem;
-    letter-spacing: 0.16em;
-  }
-
-  .wall__title {
-    font-size: 0.7rem;
     line-height: 1.15;
   }
 
   .wall__issuer {
-    font-size: 0.5rem;
-    letter-spacing: 0.02em;
+    font-size: clamp(0.42rem, 2vw, 0.54rem);
   }
 
   .wall__footer {
-    margin-top: 0.15rem;
+    margin-top: clamp(0.1rem, 0.45vh, 0.2rem);
+    gap: 0.12rem 0.2rem;
   }
 
   .wall__flourish {
-    font-size: 0.8rem;
+    font-size: clamp(0.68rem, 3vw, 0.9rem);
   }
 
   .wall__sign-line,
   .wall__date-line {
-    max-width: 2.4rem;
+    max-width: clamp(2rem, 9vw, 3rem);
+  }
+
+  .wall__sign-label,
+  .wall__date-label {
+    font-size: clamp(0.32rem, 1.4vw, 0.4rem);
+    letter-spacing: 0.1em;
   }
 
   .wall__year {
-    font-size: 0.58rem;
-    letter-spacing: 0.08em;
+    font-size: clamp(0.5rem, 2.3vw, 0.66rem);
   }
 
   .wall__ribbon {
-    width: 1.45rem;
-    height: 1.65rem;
+    width: clamp(1.2rem, 5.2vw, 1.65rem);
+    height: clamp(1.35rem, 5.8vw, 1.85rem);
   }
 
   .wall__ribbon-seal {
-    width: 1.15rem;
-    height: 1.15rem;
+    width: clamp(1rem, 4.3vw, 1.3rem);
+    height: clamp(1rem, 4.3vw, 1.3rem);
   }
 
   .wall__ribbon-tails {
-    top: 0.7rem;
-    width: 0.7rem;
-    height: 0.8rem;
+    top: clamp(0.6rem, 2.6vw, 0.8rem);
+    width: clamp(0.6rem, 2.6vw, 0.8rem);
+    height: clamp(0.7rem, 3vw, 0.9rem);
   }
 
   .wall__ribbon-tails::before,
   .wall__ribbon-tails::after {
-    width: 0.32rem;
-    height: 0.75rem;
+    width: clamp(0.26rem, 1.2vw, 0.36rem);
+    height: clamp(0.65rem, 2.8vw, 0.85rem);
+  }
+}
+
+@media (max-width: 560px) {
+  .wall__inner.container {
+    width: min(100% - 3vw, var(--max));
+  }
+
+  .wall__frame {
+    aspect-ratio: 1.25 / 1;
   }
 }

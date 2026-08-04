@@ -38,11 +38,11 @@ export function Certificates() {
     <section id="certificates" className="certificates section">
       <div className="container">
         <header className="section-head certificates__head">
-          <h2 className="section-title">Certificate wall</h2>
+          <h2 className="section-title">Credentials</h2>
         </header>
       </div>
 
-      <div className="wall" aria-label="Certificate gallery">
+      <div className="wall" aria-label="Credentials gallery">
         <div className="wall__inner container">
           {certificates.map((cert, index) => (
             <article

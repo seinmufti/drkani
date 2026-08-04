@@ -128,16 +128,24 @@
 }
 
 @media (max-width: 900px) {
+  /* One screen under nav; Morse moves to Results ::before */
   .about.section {
     height: auto;
     max-height: none;
-    overflow: visible;
-    /* Keep top flush for portrait layout; equal bottom air before separator */
-    padding: 0 0 2rem;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 var(--section-gap);
+    box-sizing: border-box;
+  }
+
+  .about.section::after {
+    content: none;
   }
 
   .about__grid.container {
-    width: min(100% - 1.5rem, var(--max));
+    width: min(100% - 4.5vw, var(--max));
     margin-inline: auto;
     padding-right: 0;
   }
@@ -146,46 +154,53 @@
     grid-template-columns: 1fr;
     gap: 0;
     width: 100%;
-    height: auto;
+    height: var(--section-screen);
+    min-height: var(--section-screen);
+    max-height: var(--section-screen);
+    display: flex;
+    flex-direction: column;
   }
 
-  /* Flatten so intro / portrait / body can reorder as grid siblings */
+  /* Flatten so intro / portrait / body can reorder as flex siblings */
   .about__copy {
     display: contents;
   }
 
   .about__intro {
     order: 1;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 1.85rem 0.15rem 0;
+    padding: clamp(0.85rem, 2.8vh, 1.65rem) 0.15rem clamp(0.55rem, 1.6vh, 1rem);
   }
 
   .about__portrait {
     order: 2;
+    flex: 1 1 auto;
     width: 100vw;
     height: auto;
+    min-height: 0;
     margin-left: calc(50% - 50vw);
-    aspect-ratio: 5 / 4;
-    max-height: 280px;
+    aspect-ratio: auto;
+    max-height: none;
     box-shadow: none;
     border-bottom: 1px solid var(--line);
   }
 
   .about__body {
     order: 3;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    /* Full-bleed gray band; inner padding keeps text/CTA readable */
     width: 100vw;
     margin-left: calc(50% - 50vw);
     box-sizing: border-box;
     background: var(--bg-muted);
-    padding: 1.35rem 1.25rem 1.35rem;
+    padding: clamp(0.85rem, 2.4vh, 1.35rem) clamp(1rem, 4.5vw, 1.35rem);
   }
 
   .about__portrait img {
@@ -193,26 +208,27 @@
   }
 
   .about__body .section-label {
-    margin-bottom: 0.7rem;
+    margin-bottom: clamp(0.4rem, 1.2vh, 0.7rem);
+    font-size: clamp(0.65rem, 2.6vw, 0.72rem);
   }
 
   .about__name {
-    font-size: clamp(2.7rem, 11vw, 3.5rem);
+    font-size: clamp(2.35rem, 10.5vw, 3.5rem);
     line-height: 1;
   }
 
   .about__role {
-    margin: 0.7rem 0 1.25rem;
-    font-size: 0.7rem;
+    margin: clamp(0.4rem, 1.2vh, 0.7rem) 0 clamp(0.55rem, 1.5vh, 1rem);
+    font-size: clamp(0.62rem, 2.5vw, 0.72rem);
     letter-spacing: 0.16em;
     max-width: 22rem;
   }
 
   .about__text {
     max-width: 28rem;
-    margin: 0 0 0.9rem;
-    font-size: 0.98rem;
-    line-height: 1.7;
+    margin: 0 0 clamp(0.45rem, 1.2vh, 0.75rem);
+    font-size: clamp(0.88rem, 3.5vw, 0.98rem);
+    line-height: 1.55;
   }
 
   .about__text:last-of-type {
@@ -221,24 +237,16 @@
 
   .about__cta {
     width: 100%;
-    max-width: 22rem;
+    max-width: min(22rem, 88vw);
     justify-content: center;
-    margin-top: 1.6rem;
-    padding: 1rem 1.25rem;
+    margin-top: clamp(0.75rem, 2.2vh, 1.35rem);
+    padding: clamp(0.75rem, 2vh, 1rem) clamp(1rem, 4vw, 1.25rem);
+    font-size: clamp(0.74rem, 2.8vw, 0.84rem);
   }
 }
 
-@media (max-width: 480px) {
-  .about__portrait {
-    aspect-ratio: 4 / 3;
-    max-height: 240px;
-  }
-
-  .about__intro {
-    padding-top: 1.5rem;
-  }
-
-  .about__name {
-    font-size: 2.55rem;
+@media (max-width: 768px) {
+  .about__grid.container {
+    width: min(100% - 4vw, var(--max));
   }
 }

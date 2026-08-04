@@ -3,10 +3,11 @@
   padding: 1.15rem 0;
   background: var(--ink);
   color: #e8e8e8;
+  overflow: visible;
 }
 
-.footer::before {
-  content: none;
+.footer__grass {
+  display: none;
 }
 
 .footer__inner {
@@ -69,6 +70,22 @@
 
 .footer__credit-text {
   white-space: nowrap;
+}
+
+/* Grass silhouette along the footer top edge — mobile only */
+@media (max-width: 900px) {
+  .footer__grass {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 20px;
+    transform: translateY(-99%);
+    pointer-events: none;
+    z-index: 1;
+  }
 }
 
 @media (max-width: 700px) {

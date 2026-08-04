@@ -149,3 +149,69 @@
   cursor: ew-resize;
   z-index: 3;
 }
+
+@media (max-width: 900px) {
+  .ba {
+    gap: clamp(0.12rem, 0.45vh, 0.28rem);
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ba__meta {
+    flex: 0 0 auto;
+    gap: clamp(0.08rem, 0.3vh, 0.18rem);
+  }
+
+  .ba__title {
+    font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+    line-height: 1.1;
+  }
+
+  .ba__caption {
+    font-size: clamp(0.8rem, 3.2vw, 0.92rem);
+  }
+
+  /*
+   * Share leftover row height so both cases fit one --section-screen.
+   * Full-bleed via container inset (4.5vw) — avoids 100vw + scrollbar-gutter overflow.
+   */
+  .ba__frame {
+    flex: 1 1 0;
+    aspect-ratio: auto;
+    min-height: 0;
+    height: auto;
+    max-height: 100%;
+    width: calc(100% + 4.5vw);
+    max-width: none;
+    margin-left: calc(4.5vw / -2);
+    box-shadow: none;
+  }
+
+  .ba__handle-knob {
+    width: clamp(1.7rem, 6.5vw, 2.1rem);
+    height: clamp(1.7rem, 6.5vw, 2.1rem);
+  }
+
+  .ba__label {
+    bottom: clamp(0.35rem, 1vh, 0.6rem);
+    padding: 0.22rem 0.45rem;
+    font-size: clamp(0.5rem, 2vw, 0.6rem);
+  }
+
+  .ba__label--before {
+    left: clamp(0.4rem, 2.2vw, 0.75rem);
+  }
+
+  .ba__label--after {
+    right: clamp(0.4rem, 2.2vw, 0.75rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .ba__frame {
+    width: calc(100% + 4vw);
+    margin-left: calc(4vw / -2);
+  }
+}
