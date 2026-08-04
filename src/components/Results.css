@@ -3,11 +3,6 @@
     linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.55) 18%, rgba(255, 255, 255, 0.55) 82%, transparent 100%);
 }
 
-/* Separator lives on About's ::after — avoid a double line (desktop) */
-#results.section::before {
-  content: none;
-}
-
 .results .section-head {
   margin-bottom: 1.25rem;
 }
@@ -19,11 +14,6 @@
 }
 
 @media (max-width: 900px) {
-  /* Morse rhythm from shared .section rules (About ::after is off on mobile) */
-  #results.section::before {
-    content: '';
-  }
-
   #results.results.section {
     display: flex;
     flex-direction: column;

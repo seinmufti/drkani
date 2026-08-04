@@ -1,4 +1,5 @@
 import { About } from './components/About'
+import { AboutMe } from './components/AboutMe'
 import { Certificates } from './components/Certificates'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
@@ -11,6 +12,7 @@ function App() {
       <Navbar />
       <main>
         <About />
+        <AboutMe />
         <Results />
         <Certificates />
         <Contact />

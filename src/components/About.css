@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }
 
-/* Owns the About → Results separator (Results drops its top rule) */
+/* Owns the About → About me separator on desktop (About me disables ::before) */
 .about.section::after {
   content: '';
   position: absolute;
@@ -61,31 +61,6 @@
   color: var(--ink-faint);
 }
 
-.about__text {
-  margin: 0 0 0.9rem;
-  max-width: 30rem;
-  color: var(--ink-soft);
-  font-weight: 300;
-  font-size: 1rem;
-}
-
-.about__cta {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 1.15rem;
-  padding: 0.9rem 1.3rem;
-  background: var(--accent);
-  color: #f7f7f7;
-  font-size: 0.84rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.about__cta:hover {
-  background: #2a2a2a;
-}
-
 .about__copy {
   display: flex;
   flex-direction: column;
@@ -95,14 +70,11 @@
   padding-right: 0.35rem;
 }
 
-.about__body {
-  /* Desktop: no muted band; flush with intro/title left edge */
+/* Reserves the former about-body height so the hero layout does not jump */
+.about__spacer {
+  flex: 1 1 auto;
+  min-height: 11rem;
   padding: 1.25rem 0 0;
-  text-align: left;
-}
-
-.about__body .section-label {
-  margin: 0 0 0.85rem;
 }
 
 .about__portrait {
@@ -128,7 +100,7 @@
 }
 
 @media (max-width: 900px) {
-  /* One screen under nav; Morse moves to Results ::before */
+  /* One screen under nav; Morse moves to following section ::before */
   .about.section {
     height: auto;
     max-height: none;
@@ -161,11 +133,11 @@
     flex-direction: column;
   }
 
-  /* Flatten so intro / portrait / body can reorder as flex siblings */
   .about__copy {
     display: contents;
   }
 
+  /* Name above the photo */
   .about__intro {
     order: 1;
     flex: 0 0 auto;
@@ -173,11 +145,34 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: clamp(0.85rem, 2.8vh, 1.65rem) 0.15rem clamp(0.55rem, 1.6vh, 1rem);
+    padding: clamp(0.65rem, 2vh, 1rem) 0.15rem 0;
   }
 
-  .about__portrait {
+  .about__name {
+    font-size: clamp(2.5rem, 11vw, 3.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  /* Title under the name, still above the photo */
+  .about__role {
     order: 2;
+    flex: 0 0 auto;
+    align-self: center;
+    text-align: center;
+    margin: 0;
+    padding: clamp(0.45rem, 1.4vh, 0.65rem) 1rem clamp(0.85rem, 2.2vh, 1.15rem);
+    font-size: clamp(0.78rem, 3.2vw, 0.95rem);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    line-height: 1.35;
+    max-width: 20rem;
+    color: var(--ink-soft);
+  }
+
+  /* Photo fills leftover height below the text */
+  .about__portrait {
+    order: 3;
     flex: 1 1 auto;
     width: 100vw;
     height: auto;
@@ -186,62 +181,16 @@
     aspect-ratio: auto;
     max-height: none;
     box-shadow: none;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .about__body {
-    order: 3;
-    flex: 0 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    box-sizing: border-box;
-    background: var(--bg-muted);
-    padding: clamp(0.85rem, 2.4vh, 1.35rem) clamp(1rem, 4.5vw, 1.35rem);
+    border-bottom: none;
   }
 
   .about__portrait img {
-    object-position: 52% 48%;
+    object-position: 52% 42%;
   }
 
-  .about__body .section-label {
-    margin-bottom: clamp(0.4rem, 1.2vh, 0.7rem);
-    font-size: clamp(0.65rem, 2.6vw, 0.72rem);
-  }
-
-  .about__name {
-    font-size: clamp(2.35rem, 10.5vw, 3.5rem);
-    line-height: 1;
-  }
-
-  .about__role {
-    margin: clamp(0.4rem, 1.2vh, 0.7rem) 0 clamp(0.55rem, 1.5vh, 1rem);
-    font-size: clamp(0.62rem, 2.5vw, 0.72rem);
-    letter-spacing: 0.16em;
-    max-width: 22rem;
-  }
-
-  .about__text {
-    max-width: 28rem;
-    margin: 0 0 clamp(0.45rem, 1.2vh, 0.75rem);
-    font-size: clamp(0.88rem, 3.5vw, 0.98rem);
-    line-height: 1.55;
-  }
-
-  .about__text:last-of-type {
-    margin-bottom: 0;
-  }
-
-  .about__cta {
-    width: 100%;
-    max-width: min(22rem, 88vw);
-    justify-content: center;
-    margin-top: clamp(0.75rem, 2.2vh, 1.35rem);
-    padding: clamp(0.75rem, 2vh, 1rem) clamp(1rem, 4vw, 1.25rem);
-    font-size: clamp(0.74rem, 2.8vw, 0.84rem);
+  /* Spacer only needed on desktop column balance */
+  .about__spacer {
+    display: none;
   }
 }
 

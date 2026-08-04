@@ -10,7 +10,7 @@ const links = [
 ]
 
 /** Sections with a Morse ::before above the content (skip About). */
-const MORSE_HASHES = new Set(['#results', '#certificates', '#contact'])
+const MORSE_HASHES = new Set(['#about-me', '#results', '#certificates', '#contact'])
 
 function resolveScrollTarget(hash: string): HTMLElement | null {
   const section = document.querySelector(hash)
