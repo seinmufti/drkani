@@ -3,13 +3,14 @@ import { Logo } from './Logo'
 import './Navbar.css'
 
 const links = [
-  { href: '#about', label: 'About' },
+  { href: '#introduction', label: 'Introduction' },
+  { href: '#about-me', label: 'About me' },
   { href: '#results', label: 'Results' },
   { href: '#certificates', label: 'Credentials' },
   { href: '#contact', label: 'Get in Touch' },
 ]
 
-/** Sections with a Morse ::before above the content (skip About). */
+/** Sections with a Morse ::before above the content (skip Intro). */
 const MORSE_HASHES = new Set(['#about-me', '#results', '#certificates', '#contact'])
 
 function resolveScrollTarget(hash: string): HTMLElement | null {
@@ -99,9 +100,9 @@ export function Navbar() {
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <div className="container nav__inner">
         <a
-          href="#about"
+          href="#introduction"
           className="nav__brand"
-          onClick={(event) => onHashNavClick(event, '#about')}
+          onClick={(event) => onHashNavClick(event, '#introduction')}
           aria-label="Dr. Kani"
         >
           <Logo />

@@ -2,7 +2,7 @@ import './About.css'
 
 export function About() {
   return (
-    <section id="about" className="about section">
+    <section id="introduction" className="about section">
       <div className="container about__grid">
         <div className="about__copy">
           <div className="about__intro">
@@ -13,6 +13,17 @@ export function About() {
 
           {/* Holds the old body footprint so hero proportions stay stable */}
           <div className="about__spacer" aria-hidden="true" />
+
+          <blockquote className="about__quote">
+            <div className="about__quote-body">
+              <p>Every smile tells a story.</p>
+              <p>I help write the best one.</p>
+            </div>
+          </blockquote>
+
+          <a href="#contact" className="about__cta">
+            Book a consultation
+          </a>
         </div>
 
         <figure className="about__portrait">

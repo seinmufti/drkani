@@ -116,31 +116,40 @@
     align-items: stretch;
     gap: 0;
     height: auto;
-    max-height: none;
+    max-height: 0;
     overflow: hidden;
-    padding: 0.35rem 0;
-    /* Opaque light gray panel — animate transform/visibility only, never opacity */
+    padding: 0;
     background-color: var(--bg-soft);
     background-image: none;
     opacity: 1;
-    border-top: 1px solid var(--line);
-    box-shadow: var(--shadow);
-    transform: translateY(-0.75rem);
+    border-top: 1px solid transparent;
+    box-shadow: none;
+    transform: none;
     pointer-events: none;
     visibility: hidden;
+    /* Collapse as one motion — avoid tiny translate + delayed hide (felt like a halt) */
     transition:
-      transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
-      visibility 0s linear 0.34s;
+      max-height 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      padding 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      visibility 0s linear 0.3s;
   }
 
   .nav__links--open {
-    transform: translateY(0);
+    max-height: 22rem;
+    padding: 0.35rem 0;
     pointer-events: auto;
     visibility: visible;
     opacity: 1;
     background-color: var(--bg-soft);
+    border-top-color: var(--line);
+    box-shadow: var(--shadow);
     transition:
-      transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+      max-height 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      padding 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
       visibility 0s linear 0s;
   }
 
@@ -156,35 +165,11 @@
     font-weight: 500;
     letter-spacing: 0.06em;
     box-shadow: none;
-    opacity: 0;
-    transform: translateY(0.45rem);
+    opacity: 1;
+    transform: none;
     transition:
-      opacity 0.26s ease,
-      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
       background 0.2s ease,
       color 0.2s ease;
-  }
-
-  .nav__links--open .nav__link {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Delay only enter opacity/transform — keep hover colors immediate */
-  .nav__links--open .nav__link:nth-child(1) {
-    transition-delay: 0.04s, 0.04s, 0s, 0s;
-  }
-
-  .nav__links--open .nav__link:nth-child(2) {
-    transition-delay: 0.08s, 0.08s, 0s, 0s;
-  }
-
-  .nav__links--open .nav__link:nth-child(3) {
-    transition-delay: 0.12s, 0.12s, 0s, 0s;
-  }
-
-  .nav__links--open .nav__link:nth-child(4) {
-    transition-delay: 0.16s, 0.16s, 0s, 0s;
   }
 
   .nav__link:hover,
@@ -197,9 +182,7 @@
 @media (prefers-reduced-motion: reduce) {
   .nav__toggle span,
   .nav__links,
-  .nav__links--open,
-  .nav__link,
-  .nav__links--open .nav__link {
+  .nav__links--open {
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
   }
