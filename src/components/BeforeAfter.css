@@ -175,7 +175,9 @@
 
   /*
    * Share leftover row height so both cases fit one --section-screen.
-   * Full-bleed via container inset (4.5vw) — avoids 100vw + scrollbar-gutter overflow.
+   * Full-bleed: cancel exact .container pad (--container-pad). Results
+   * container uses padding-inline so the frame stays inside the border box
+   * (no 100vw / scrollbar-gutter overflow).
    */
   .ba__frame {
     flex: 1 1 0;
@@ -183,9 +185,9 @@
     min-height: 0;
     height: auto;
     max-height: 100%;
-    width: calc(100% + 4.5vw);
+    width: calc(100% + 2 * var(--container-pad));
     max-width: none;
-    margin-left: calc(4.5vw / -2);
+    margin-inline: calc(-1 * var(--container-pad));
     box-shadow: none;
   }
 
@@ -206,12 +208,5 @@
 
   .ba__label--after {
     right: clamp(0.4rem, 2.2vw, 0.75rem);
-  }
-}
-
-@media (max-width: 768px) {
-  .ba__frame {
-    width: calc(100% + 4vw);
-    margin-left: calc(4vw / -2);
   }
 }

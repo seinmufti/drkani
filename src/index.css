@@ -28,6 +28,8 @@
   /* Mobile one-screen sections (used ≤900px) */
   --section-screen: calc(100dvh - var(--nav-h));
   --section-gap: clamp(0.75rem, 2.5vh, 1.25rem);
+  /* Half of horizontal inset on .container (100% - 2×pad) */
+  --container-pad: 1.25rem;
 }
 
 *,
@@ -79,7 +81,7 @@ textarea {
 }
 
 .container {
-  width: min(100% - 2.5rem, var(--max));
+  width: min(100% - 2 * var(--container-pad), var(--max));
   margin-inline: auto;
 }
 
@@ -136,8 +138,8 @@ textarea {
     scroll-padding-top: calc(var(--nav-h) + 0.5rem);
   }
 
-  .container {
-    width: min(100% - 4.5vw, var(--max));
+  :root {
+    --container-pad: 2.25vw; /* half of former 4.5vw inset */
   }
 
   /*
@@ -172,7 +174,7 @@ textarea {
 }
 
 @media (max-width: 768px) {
-  .container {
-    width: min(100% - 4vw, var(--max));
+  :root {
+    --container-pad: 2vw; /* half of former 4vw inset */
   }
 }

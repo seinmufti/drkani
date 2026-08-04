@@ -38,16 +38,20 @@
     height: var(--section-screen);
     max-height: var(--section-screen);
     box-sizing: border-box;
+    /*
+     * Padding-based inset (same --container-pad as shared .container) so
+     * .ba__frame can cancel pad and reach the border box = viewport edges
+     * without escaping overflow:hidden.
+     */
+    width: 100%;
+    max-width: none;
+    padding-inline: var(--container-pad);
     overflow: hidden;
   }
 
   .results .section-head {
     flex: 0 0 auto;
     margin-bottom: clamp(0.3rem, 1vh, 0.55rem);
-  }
-
-  .results .section-title {
-    font-size: clamp(1.55rem, 6.5vw, 2.15rem);
   }
 
   .results__grid {
@@ -60,8 +64,12 @@
     align-content: stretch;
   }
 
+  /*
+   * Do not clip horizontal bleed from .ba__frame negative margins.
+   * Vertical shrink still works via min-height: 0; frame has its own overflow.
+   */
   .results__grid > .ba {
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
   }
 }
