@@ -236,8 +236,7 @@
   #contact.contact.section {
     display: flex;
     flex-direction: column;
-    /* Extra space below Morse ::before (shared default is 2×gap + morse-h) */
-    padding-top: calc(var(--section-gap) * 3.5 + var(--morse-h));
+    /* Morse top pad from shared .section (--morse-pad above + below line) */
     /* Clear white gap above footer grass (grass stays on .footer, not inside Contact) */
     padding-bottom: clamp(2.75rem, 6vh, 4rem);
   }

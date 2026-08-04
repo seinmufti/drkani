@@ -257,24 +257,23 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    /* Extra space below Morse ::before (shared default is 2×gap + morse-h) */
-    padding-top: calc(var(--section-gap) * 3.5 + var(--morse-h));
-    /* border-box: paddings + content = one mobile screen under the nav */
-    height: calc(
-      var(--section-screen) + (var(--section-gap) * 3.5 + var(--morse-h)) + var(--section-gap)
-    );
-    max-height: calc(
-      var(--section-screen) + (var(--section-gap) * 3.5 + var(--morse-h)) + var(--section-gap)
-    );
+    /* In-flow Morse (::before + equal margins) + one screen of content */
+    height: calc(var(--section-screen) + var(--morse-pad) * 2 + var(--morse-h));
+    max-height: calc(var(--section-screen) + var(--morse-pad) * 2 + var(--morse-h));
     overflow: hidden;
   }
 
   #certificates.certificates.section > .container {
-    flex: 0 0 auto;
-    padding-block: clamp(0.35rem, 1.2vh, 0.75rem) 0;
+    flex: 1 1 0;
+    min-height: 0;
+    padding-block: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .certificates__head {
+    margin-top: 0;
+    padding-top: 0;
     margin-bottom: clamp(1.5rem, 2.5vh, 2rem);
   }
 

@@ -27,13 +27,13 @@
   #results.results.section {
     display: flex;
     flex-direction: column;
-    /* Extra space below Morse ::before (shared default is 2×gap + morse-h) */
-    padding-top: calc(var(--section-gap) * 3.5 + var(--morse-h));
+    /* In-flow Morse ::before is first flex item; equal margin-block */
   }
 
   #results.results.section > .container {
     display: flex;
     flex-direction: column;
+    flex: 1 1 0;
     min-height: 0;
     height: var(--section-screen);
     max-height: var(--section-screen);

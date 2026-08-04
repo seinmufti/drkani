@@ -28,6 +28,8 @@
   /* Mobile one-screen sections (used ≤900px) */
   --section-screen: calc(100dvh - var(--nav-h));
   --section-gap: clamp(0.75rem, 2.5vh, 1.25rem);
+  /* Fixed equal space above and below Morse separators (all sections) */
+  --morse-pad: 1rem;
   /* Half of horizontal inset on .container (100% - 2×pad) */
   --container-pad: 1.25rem;
 }
@@ -143,20 +145,33 @@ textarea {
   }
 
   /*
-   * Mobile section rhythm:
-   * content (≈1 screen) → gap → Morse KANI → gap → content…
-   * Morse sits on sections after About at top: --section-gap.
+   * Mobile Morse rhythm — equal pad above & below on EVERY separator.
+   * In-flow ::before with identical margin-block (not absolute + padding),
+   * so both sides stay the same even with flex / fixed-height sections.
+   *
+   * content → --morse-pad → Morse → --morse-pad → content
    */
   .section {
-    padding: 0 0 var(--section-gap);
+    padding: 0;
   }
 
   .section:not(:first-of-type) {
-    padding-top: calc(var(--section-gap) * 2 + var(--morse-h));
+    padding-top: 0;
   }
 
   .section:not(:first-of-type)::before {
-    top: var(--section-gap);
+    content: '';
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    display: block;
+    flex: 0 0 auto;
+    width: 100%;
+    height: var(--morse-h);
+    margin: var(--morse-pad) 0;
+    background: var(--morse-rule);
+    pointer-events: none;
   }
 
   .section-title {
@@ -164,6 +179,8 @@ textarea {
   }
 
   .section-head {
+    margin-top: 0;
+    padding-top: 0;
     margin-bottom: clamp(0.55rem, 1.6vh, 0.9rem);
   }
 
