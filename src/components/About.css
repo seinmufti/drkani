@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }
 
-/* Owns the About → About me separator on desktop (About me disables ::before) */
+/* Owns the Introduction → Results separator on desktop (Results disables ::before) */
 .about.section::after {
   content: '';
   position: absolute;
@@ -99,18 +99,18 @@
   object-position: 48% 45%;
 }
 
-/* Quote + CTA are mobile intro accents — desktop keeps About me section */
+/* Quote + CTA are mobile intro accents — desktop keeps the left column calm */
 .about__quote,
 .about__cta {
   display: none;
 }
 
 @media (max-width: 900px) {
-  /* Intro screen: name → title → image → quote, then Morse into About me */
+  /* Intro: nav (in-flow) + this = one svh screen */
   .about.section {
-    height: auto;
-    max-height: none;
-    min-height: 0;
+    height: var(--section-screen);
+    max-height: var(--section-screen);
+    min-height: var(--section-screen);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -132,9 +132,10 @@
     grid-template-columns: 1fr;
     gap: 0;
     width: 100%;
-    height: var(--section-screen);
-    min-height: var(--section-screen);
-    max-height: var(--section-screen);
+    flex: 1 1 0;
+    min-height: 0;
+    height: auto;
+    max-height: none;
     display: flex;
     flex-direction: column;
   }

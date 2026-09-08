@@ -1,15 +1,8 @@
-import { useState, type FormEvent } from 'react'
+import { Footer } from './Footer'
 import { PlantPot } from './PlantPot'
 import './Contact.css'
 
 export function Contact() {
-  const [sent, setSent] = useState(false)
-
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setSent(true)
-  }
-
   return (
     <section id="contact" className="contact section">
       <div className="container contact__grid">
@@ -23,18 +16,18 @@ export function Contact() {
           <dl className="contact__details">
             <div>
               <dt>Clinic</dt>
-              <dd>Modern Dental Studio</dd>
+              <dd>Coral Dental Clinic</dd>
             </div>
             <div>
               <dt>Phone</dt>
               <dd>
-                <a href="tel:+10000000000">+1 (000) 000-0000</a>
+                <a href="tel:+9647504140225">+964 750 414 0225</a>
               </dd>
             </div>
             <div>
               <dt>Email</dt>
               <dd>
-                <a href="mailto:hello@drkani.clinic">hello@drkani.clinic</a>
+                <a href="mailto:drkani@gmail.com">drkani@gmail.com</a>
               </dd>
             </div>
             <div>
@@ -55,35 +48,20 @@ export function Contact() {
             <PlantPot variant="trail" className="contact__pot contact__pot--edge" />
           </div>
 
-          <form className="contact__form" onSubmit={onSubmit}>
-            <label className="contact__field">
-              <span>Name</span>
-              <input name="name" type="text" autoComplete="name" required />
-            </label>
-
-            <label className="contact__field">
-              <span>Email</span>
-              <input name="email" type="email" autoComplete="email" required />
-            </label>
-
-            <label className="contact__field">
-              <span>Message</span>
-              <textarea name="message" rows={3} required />
-            </label>
-
-            <button className="contact__submit" type="submit">
-              Send message
-            </button>
-
-            {sent ? (
-              <p className="contact__note" role="status">
-                Thank you. Your message is ready — connect this form to your email
-                or booking tool when you deploy.
-              </p>
-            ) : null}
-          </form>
+          <div className="contact__map">
+            <iframe
+              className="contact__map-frame"
+              title="Clinic location on Google Maps"
+              src="https://maps.google.com/maps?q=36.18775884219302,43.96851291215664&z=16&hl=en&output=embed"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
         </div>
       </div>
+
+      <Footer />
     </section>
   )
 }

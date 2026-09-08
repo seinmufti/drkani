@@ -249,32 +249,32 @@
 
 @media (max-width: 900px) {
   /*
-   * Content (head + wall) = --section-screen so the brick wall
-   * bottom aligns with the viewport bottom below the nav.
-   * Outer padding from shared .section supplies space → Morse → space.
+   * One screen under nav (+ Morse pad/rule). Head stays compact;
+   * wall fills the rest — no empty flex gap between title and brick.
    */
   #certificates.certificates.section {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    /* In-flow Morse (::before + equal margins) + one screen of content */
-    height: calc(var(--section-screen) + var(--morse-pad) * 2 + var(--morse-h));
-    max-height: calc(var(--section-screen) + var(--morse-pad) * 2 + var(--morse-h));
+    /* Morse under nav after anchor; content fills --section-screen */
+    height: var(--section-with-morse);
+    max-height: var(--section-with-morse);
+    min-height: var(--section-with-morse);
     overflow: hidden;
   }
 
   #certificates.certificates.section > .container {
-    flex: 1 1 0;
+    flex: 0 0 auto;
     min-height: 0;
     padding-block: 0;
-    display: flex;
-    flex-direction: column;
+    /* Match Results: 2vh above section title */
+    padding-top: 2vh;
   }
 
   .certificates__head {
     margin-top: 0;
     padding-top: 0;
-    margin-bottom: clamp(1.5rem, 2.5vh, 2rem);
+    margin-bottom: 3vh;
   }
 
   .wall {
@@ -282,61 +282,74 @@
     min-height: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: clamp(0.45rem, 1.4vh, 1rem) 0;
+    justify-content: flex-start;
+    /* Brick peeks around the grid so cards read as separate pieces */
+    padding: clamp(0.45rem, 1.4vh, 0.75rem) clamp(0.7rem, 3.8vw, 1.15rem)
+      clamp(0.55rem, 1.6vh, 0.9rem);
   }
 
   .wall__inner.container {
-    width: min(100% - 3.5vw, var(--max));
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
   }
 
-  /* 2 × 3 cert grid */
+  /* 2 × 3 cert grid — landscape tiles, not stretched squares */
   .wall__inner {
     width: 100%;
     flex: 1 1 auto;
     min-height: 0;
+    box-sizing: border-box;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(0.85rem, 2.4vh, 1.65rem) clamp(0.75rem, 3.2vw, 1.5rem);
-    padding-block: clamp(0.15rem, 0.5vh, 0.3rem);
+    grid-template-rows: repeat(3, auto);
+    gap: 1vh;
+    padding-block: 0;
     align-content: center;
   }
 
   .wall__frame {
-    padding: clamp(0.16rem, 0.65vw, 0.26rem);
-    aspect-ratio: 1.28 / 1;
+    padding: clamp(0.2rem, 0.9vw, 0.32rem);
+    aspect-ratio: 1.35 / 1;
+    width: 100%;
+    height: auto;
     min-height: 0;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.7) inset,
+      0 2px 5px rgba(40, 18, 12, 0.22),
+      0 8px 16px rgba(20, 14, 10, 0.28);
   }
 
   .wall__mat {
-    padding: clamp(0.22rem, 1vw, 0.36rem) clamp(0.26rem, 1.2vw, 0.42rem) clamp(0.18rem, 0.8vw, 0.28rem);
-    gap: clamp(0.03rem, 0.25vh, 0.07rem);
+    padding: clamp(0.28rem, 1.2vw, 0.42rem) clamp(0.32rem, 1.4vw, 0.5rem)
+      clamp(0.22rem, 1vw, 0.34rem);
+    gap: clamp(0.05rem, 0.35vh, 0.1rem);
     box-shadow:
       inset 0 0 0 2px #faf7f0,
       inset 0 0 0 3px #b9ae97;
   }
 
   .wall__eyebrow {
-    font-size: clamp(0.36rem, 1.55vw, 0.46rem);
+    font-size: clamp(0.38rem, 1.6vw, 0.48rem);
     letter-spacing: 0.18em;
   }
 
   .wall__title {
-    font-size: clamp(0.58rem, 2.8vw, 0.8rem);
+    font-size: clamp(0.62rem, 3vw, 0.84rem);
     max-width: none;
     line-height: 1.15;
   }
 
   .wall__issuer {
-    font-size: clamp(0.42rem, 2vw, 0.54rem);
+    font-size: clamp(0.44rem, 2.1vw, 0.56rem);
   }
 
   .wall__footer {
-    margin-top: clamp(0.1rem, 0.45vh, 0.2rem);
-    gap: 0.12rem 0.2rem;
+    margin-top: clamp(0.15rem, 0.55vh, 0.28rem);
+    gap: 0.14rem 0.22rem;
   }
 
   .wall__flourish {
-    font-size: clamp(0.68rem, 3vw, 0.9rem);
+    font-size: clamp(0.72rem, 3.2vw, 0.95rem);
   }
 
   .wall__sign-line,
@@ -351,7 +364,7 @@
   }
 
   .wall__year {
-    font-size: clamp(0.5rem, 2.3vw, 0.66rem);
+    font-size: clamp(0.52rem, 2.4vw, 0.68rem);
   }
 
   .wall__ribbon {
@@ -378,11 +391,11 @@
 }
 
 @media (max-width: 560px) {
-  .wall__inner.container {
-    width: min(100% - 3vw, var(--max));
+  .wall {
+    padding-inline: clamp(0.55rem, 3.2vw, 0.85rem);
   }
 
-  .wall__frame {
-    aspect-ratio: 1.25 / 1;
+  .wall__inner {
+    gap: clamp(0.75rem, 2.2vh, 1.1rem) clamp(0.7rem, 3.6vw, 1rem);
   }
 }

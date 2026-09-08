@@ -4,38 +4,53 @@ import './Navbar.css'
 
 const links = [
   { href: '#introduction', label: 'Introduction' },
-  { href: '#about-me', label: 'About me' },
   { href: '#results', label: 'Results' },
   { href: '#certificates', label: 'Credentials' },
   { href: '#contact', label: 'Get in Touch' },
 ]
 
-/** Sections with a Morse ::before above the content (skip Intro). */
-const MORSE_HASHES = new Set(['#about-me', '#results', '#certificates', '#contact'])
-
+/** No sections currently land on the title. */
 function resolveScrollTarget(hash: string): HTMLElement | null {
   const section = document.querySelector(hash)
   if (!(section instanceof HTMLElement)) return null
-
-  // Land on the title/head so the Morse rule scrolls up under the sticky nav.
-  if (MORSE_HASHES.has(hash)) {
-    const inner =
-      section.querySelector('.section-head') ??
-      section.querySelector('.section-title')
-    if (inner instanceof HTMLElement) return inner
-  }
-
   return section
 }
 
+function scrollAfterMorseLine(section: HTMLElement, navH: number, isMobile: boolean) {
+  let afterLine = section.getBoundingClientRect().top + window.scrollY
+
+  if (isMobile) {
+    const before = getComputedStyle(section, '::before')
+    const marginTop = parseFloat(before.marginTop) || 0
+    const height = parseFloat(before.height) || 0
+    afterLine += marginTop + height
+  }
+
+  window.scrollTo({ top: Math.max(0, afterLine - navH), behavior: 'smooth' })
+}
+
 function scrollToSectionHash(hash: string) {
+  const styles = getComputedStyle(document.documentElement)
+  const navH = parseFloat(styles.getPropertyValue('--nav-h')) || 72
+  const isMobile = window.matchMedia('(max-width: 900px)').matches
+
+  /*
+   * Results, Credentials, Contact: land immediately under the Morse rule
+   * (not on the title). Mobile owns the rule via section::before.
+   */
+  if (hash === '#results' || hash === '#certificates' || hash === '#contact') {
+    const section = document.querySelector(hash)
+    if (!(section instanceof HTMLElement)) return
+    scrollAfterMorseLine(section, navH, isMobile)
+    history.pushState(null, '', hash)
+    return
+  }
+
   const target = resolveScrollTarget(hash)
   if (!target) return
 
-  const styles = getComputedStyle(document.documentElement)
-  const navH = parseFloat(styles.getPropertyValue('--nav-h')) || 72
   // Match html scroll-padding-top breathing room (mobile vs desktop).
-  const pad = window.matchMedia('(max-width: 900px)').matches ? 8 : 16
+  const pad = isMobile ? 8 : 16
   const top = target.getBoundingClientRect().top + window.scrollY - navH - pad
 
   window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })

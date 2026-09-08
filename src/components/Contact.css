@@ -58,14 +58,22 @@
   color: var(--ink-soft);
 }
 
-.contact__form {
-  display: grid;
-  gap: 1.1rem;
-  padding: 1.75rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
+.contact__map {
   position: relative;
   z-index: 1;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  min-height: 22rem;
+  box-sizing: border-box;
+}
+
+.contact__map-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 22rem;
+  border: 0;
 }
 
 .contact__field {
@@ -236,19 +244,26 @@
   #contact.contact.section {
     display: flex;
     flex-direction: column;
-    /* Morse top pad from shared .section (--morse-pad above + below line) */
-    /* Clear white gap above footer grass (grass stays on .footer, not inside Contact) */
-    padding-bottom: clamp(2.75rem, 6vh, 4rem);
+    box-sizing: border-box;
+    /* Morse under nav after anchor; content + footer fill --section-screen */
+    height: var(--section-with-morse);
+    min-height: var(--section-with-morse);
+    max-height: var(--section-with-morse);
+    overflow: visible;
+    padding-bottom: 0;
   }
 
-  /* .container is also .contact__grid — height follows content (no empty flex gap) */
   .contact__grid {
     grid-template-columns: 1fr;
-    gap: clamp(1.5rem, 3vh, 2rem);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 4svh; /* map under clinic details */
+    flex: 1 1 0;
     min-height: 0;
     height: auto;
     box-sizing: border-box;
-    align-content: start;
+    align-content: stretch;
+    padding-top: 2svh;
+    padding-bottom: 7vh; /* map stretches to 7vh above grass */
   }
 
   .contact__copy,
@@ -256,10 +271,16 @@
     min-height: 0;
   }
 
+  .contact__copy {
+    align-items: center;
+    text-align: center;
+  }
+
   .contact__side {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    height: 100%;
   }
 
   .contact__copy .section-intro {
@@ -272,63 +293,49 @@
   }
 
   .contact__details {
-    margin-top: clamp(1.25rem, 2.5vh, 1.5rem);
+    margin-top: 4svh; /* under Get in touch title */
     margin-bottom: 0;
+    margin-inline: auto;
+    width: max-content;
+    max-width: 100%;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(0.55rem, 1.6vh, 1rem) clamp(0.65rem, 3vw, 1rem);
+    gap: clamp(0.55rem, 1.4svh, 0.9rem) clamp(1.25rem, 5vw, 2rem);
+    justify-items: center;
+    text-align: center;
   }
 
   .contact__details dt {
-    font-size: clamp(0.58rem, 2.3vw, 0.68rem);
+    font-size: clamp(0.72rem, 2.9vw, 0.88rem);
   }
 
   .contact__details dd {
-    font-size: clamp(0.82rem, 3.3vw, 0.95rem);
+    font-size: clamp(0.98rem, 4vw, 1.15rem);
   }
 
-  .contact__form {
-    flex: 0 0 auto;
+  .contact__map {
+    position: relative;
+    flex: 1 1 0;
     margin: 0;
-    min-height: 0;
-    padding: clamp(0.85rem, 2.2vh, 1.2rem) clamp(0.9rem, 3.5vw, 1.2rem);
-    gap: clamp(0.55rem, 1.5vh, 0.9rem);
-    display: grid;
-    align-content: start;
-  }
-
-  .contact__field {
-    gap: clamp(0.25rem, 0.7vh, 0.4rem);
-  }
-
-  .contact__field span {
-    font-size: clamp(0.6rem, 2.4vw, 0.7rem);
-  }
-
-  .contact__field input {
-    min-height: clamp(2.1rem, 5.5vh, 2.45rem);
-    padding: clamp(0.35rem, 1vh, 0.5rem) clamp(0.65rem, 2.5vw, 0.85rem);
-  }
-
-  .contact__field textarea {
-    min-height: clamp(3.25rem, 10vh, 5rem);
-    max-height: 14vh;
-    padding: clamp(0.35rem, 1vh, 0.5rem) clamp(0.65rem, 2.5vw, 0.85rem);
-    resize: none;
-  }
-
-  .contact__submit {
-    margin-top: clamp(0.15rem, 0.5vh, 0.3rem);
-    padding: clamp(0.7rem, 1.8vh, 0.9rem) clamp(1rem, 4vw, 1.3rem);
-    font-size: clamp(0.72rem, 2.8vw, 0.82rem);
     width: 100%;
-    justify-self: stretch;
+    height: 100%;
+    min-height: 0;
   }
 
-  .contact__note {
-    font-size: clamp(0.78rem, 3vw, 0.9rem);
+  .contact__map-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
   }
 
   .contact__plants {
     display: none;
+  }
+
+  /* Footer at bottom of the under-nav screen */
+  #contact.contact.section > .footer {
+    flex: 0 0 auto;
+    margin-top: auto;
   }
 }

@@ -17,6 +17,10 @@ type BeforeAfterProps = {
   afterScale?: number
 }
 
+type DragMode = 'pending' | 'slide' | 'scroll'
+
+const AXIS_LOCK_PX = 10
+
 export function BeforeAfter({
   beforeSrc,
   afterSrc,
@@ -29,8 +33,12 @@ export function BeforeAfter({
   afterScale,
 }: BeforeAfterProps) {
   const frameRef = useRef<HTMLDivElement>(null)
-  const dragging = useRef(false)
+  /** True only after pointerdown on *this* frame — ignores sibling sliders. */
+  const trackingRef = useRef(false)
+  const modeRef = useRef<DragMode>('pending')
+  const startRef = useRef({ x: 0, y: 0 })
   const [position, setPosition] = useState(50)
+  const [dragging, setDragging] = useState(false)
 
   const updateFromClientX = useCallback((clientX: number) => {
     const el = frameRef.current
@@ -40,23 +48,76 @@ export function BeforeAfter({
     setPosition(Math.min(100, Math.max(0, next)))
   }, [])
 
+  const endGesture = useCallback((event?: PointerEvent) => {
+    if (!trackingRef.current) return
+    const el = frameRef.current
+    if (el && modeRef.current === 'slide' && event) {
+      try {
+        el.releasePointerCapture(event.pointerId)
+      } catch {
+        /* already released */
+      }
+    }
+    trackingRef.current = false
+    modeRef.current = 'pending'
+    setDragging(false)
+  }, [])
+
   useEffect(() => {
     const onMove = (event: PointerEvent) => {
-      if (!dragging.current) return
+      if (!trackingRef.current) return
+
+      // Hover / move without a pressed button must never drive the slider
+      if (event.pointerType === 'mouse' && event.buttons === 0) {
+        endGesture(event)
+        return
+      }
+
+      if (modeRef.current === 'scroll') return
+
+      if (modeRef.current === 'pending') {
+        const dx = Math.abs(event.clientX - startRef.current.x)
+        const dy = Math.abs(event.clientY - startRef.current.y)
+        if (dx < AXIS_LOCK_PX && dy < AXIS_LOCK_PX) return
+
+        // Vertical intent → let the page scroll; ignore this gesture for the slider
+        if (dy > dx) {
+          modeRef.current = 'scroll'
+          setDragging(false)
+          return
+        }
+
+        // Horizontal swipe/drag only — no tap or hover seek
+        modeRef.current = 'slide'
+        setDragging(true)
+        const el = frameRef.current
+        if (el) {
+          try {
+            el.setPointerCapture(event.pointerId)
+          } catch {
+            /* already released */
+          }
+        }
+      }
+
+      if (modeRef.current !== 'slide') return
+      event.preventDefault()
       updateFromClientX(event.clientX)
     }
 
-    const onUp = () => {
-      dragging.current = false
+    const onUp = (event: PointerEvent) => {
+      endGesture(event)
     }
 
-    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointermove', onMove, { passive: false })
     window.addEventListener('pointerup', onUp)
+    window.addEventListener('pointercancel', onUp)
     return () => {
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('pointercancel', onUp)
     }
-  }, [updateFromClientX])
+  }, [endGesture, updateFromClientX])
 
   return (
     <article className="ba">
@@ -66,10 +127,34 @@ export function BeforeAfter({
 
       <div
         ref={frameRef}
-        className="ba__frame"
+        className={dragging ? 'ba__frame ba__frame--dragging' : 'ba__frame'}
+        role="slider"
+        tabIndex={0}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(position)}
+        aria-label={`Reveal before and after for ${title}`}
         onPointerDown={(event) => {
-          dragging.current = true
-          updateFromClientX(event.clientX)
+          if (event.button !== 0 && event.pointerType === 'mouse') return
+          trackingRef.current = true
+          modeRef.current = 'pending'
+          setDragging(false)
+          startRef.current = { x: event.clientX, y: event.clientY }
+        }}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+            event.preventDefault()
+            setPosition((p) => Math.max(0, p - 2))
+          } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+            event.preventDefault()
+            setPosition((p) => Math.min(100, p + 2))
+          } else if (event.key === 'Home') {
+            event.preventDefault()
+            setPosition(0)
+          } else if (event.key === 'End') {
+            event.preventDefault()
+            setPosition(100)
+          }
         }}
       >
         <img
@@ -108,16 +193,6 @@ export function BeforeAfter({
 
         <span className="ba__label ba__label--before">Before</span>
         <span className="ba__label ba__label--after">After</span>
-
-        <input
-          className="ba__range"
-          type="range"
-          min={0}
-          max={100}
-          value={position}
-          aria-label={`Reveal before and after for ${title}`}
-          onChange={(event) => setPosition(Number(event.target.value))}
-        />
       </div>
     </article>
   )

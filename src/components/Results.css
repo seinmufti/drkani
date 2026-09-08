@@ -3,6 +3,11 @@
     linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.55) 18%, rgba(255, 255, 255, 0.55) 82%, transparent 100%);
 }
 
+/* Separator lives on Introduction's ::after — avoid a double line (desktop) */
+#results.section::before {
+  content: none;
+}
+
 .results .section-head {
   margin-bottom: 1.25rem;
 }
@@ -14,54 +19,62 @@
 }
 
 @media (max-width: 900px) {
+  /* Morse rhythm from shared .section rules (Introduction ::after is off on mobile) */
+  #results.section::before {
+    content: '';
+  }
+
   #results.results.section {
     display: flex;
     flex-direction: column;
-    /*
-     * Parent has no fixed height; flex:1 + basis 0 on .container was
-     * collapsing Results to only the Morse rule (section invisible).
-     */
-    min-height: calc(var(--section-screen) + var(--morse-pad) * 2 + var(--morse-h));
+    box-sizing: border-box;
+    /* Morse under nav after anchor; content fills --section-screen */
+    height: var(--section-with-morse);
+    min-height: var(--section-with-morse);
+    max-height: var(--section-with-morse);
+    overflow: hidden;
   }
 
   #results.results.section > .container {
     display: flex;
     flex-direction: column;
-    flex: 0 0 auto;
-    flex-shrink: 0;
-    min-height: var(--section-screen);
-    height: var(--section-screen);
-    max-height: var(--section-screen);
+    flex: 1 1 0;
+    min-height: 0;
+    height: auto;
+    max-height: none;
     box-sizing: border-box;
     /*
      * Padding-based inset (same --container-pad as shared .container) so
      * .ba__frame can cancel pad and reach the border box = viewport edges
      * without escaping overflow:hidden.
+     * 2vh above title, 4vh below second image; 2vh under section title.
      */
     width: 100%;
     max-width: none;
     padding-inline: var(--container-pad);
+    padding-top: 2vh;
+    padding-bottom: 4vh;
     overflow: hidden;
   }
 
   .results .section-head {
     flex: 0 0 auto;
-    margin-bottom: clamp(0.3rem, 1vh, 0.55rem);
+    margin-bottom: 2vh;
   }
 
   .results__grid {
     flex: 1 1 0;
     min-height: 0;
     grid-template-columns: 1fr;
-    /* minmax(0,1fr) lets rows shrink below frame aspect/min-content */
+    /* Equal flex rows: images shrink to fit title gaps + 2vh between cases */
     grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(0.4rem, 1.2vh, 0.75rem);
+    gap: 2vh;
     align-content: stretch;
   }
 
   /*
-   * Do not clip horizontal bleed from .ba__frame negative margins.
-   * Vertical shrink still works via min-height: 0; frame has its own overflow.
+   * Keep overflow visible so .ba__frame can cancel container pad
+   * and span the full viewport width. Frame clips its own images.
    */
   .results__grid > .ba {
     min-height: 0;

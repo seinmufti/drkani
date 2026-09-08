@@ -26,11 +26,16 @@
   --morse-h: 3px;
   --morse-rule: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='124' height='3' fill='%23c4c4c4'%3E%3Crect x='0' width='12' height='3'/%3E%3Crect x='16' width='4' height='3'/%3E%3Crect x='24' width='12' height='3'/%3E%3Crect x='48' width='4' height='3'/%3E%3Crect x='56' width='12' height='3'/%3E%3Crect x='80' width='12' height='3'/%3E%3Crect x='96' width='4' height='3'/%3E%3Crect x='112' width='4' height='3'/%3E%3Crect x='120' width='4' height='3'/%3E%3C/svg%3E")
     center / 85% var(--morse-h) no-repeat;
-  /* Mobile one-screen sections (used ≤900px) */
-  --section-screen: calc(100dvh - var(--nav-h));
-  --section-gap: clamp(0.75rem, 2.5vh, 1.25rem);
   /* Fixed equal space above and below Morse separators (all sections) */
   --morse-pad: 1rem;
+  --morse-block: calc(var(--morse-pad) * 2 + var(--morse-h));
+  /*
+   * One screen under sticky nav. Mobile (≤900px) overrides with svh.
+   * Content height = viewport − nav. Morse sections add --morse-block.
+   */
+  --section-screen: calc(100vh - var(--nav-h));
+  --section-with-morse: calc(var(--section-screen) + var(--morse-block));
+  --section-gap: clamp(0.75rem, 2.5vh, 1.25rem);
   /* Half of horizontal inset on .container (100% - 2×pad) */
   --container-pad: 1.25rem;
 }
@@ -143,6 +148,16 @@ textarea {
 
   :root {
     --container-pad: 2.25vw; /* half of former 4.5vw inset */
+    /*
+     * Viewport convention (iPhone Safari-safe):
+     * - svh = chrome expanded (stable; no mid-scroll jump like dvh)
+     * - --section-screen = visible area under sticky nav
+     * - --section-with-morse = Morse (::before) + that content area
+     *   (anchor lands after Morse under nav → content fills the screen)
+     */
+    --section-screen: calc(100vh - var(--nav-h));
+    --section-screen: calc(100svh - var(--nav-h));
+    --section-with-morse: calc(var(--section-screen) + var(--morse-block));
   }
 
   /*
@@ -177,6 +192,17 @@ textarea {
 
   .section-title {
     font-size: clamp(1.85rem, 7.5vw, 2.6rem);
+  }
+
+  /* Results / Credentials / Contact — identical section titles */
+  #results .section-title,
+  #certificates .section-title,
+  #contact .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.85rem, 7.5vw, 2.6rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 
   .section-head {

@@ -1,112 +1,94 @@
 import { NordlysMark } from './NordlysMark'
 import './Footer.css'
 
+const GRASS_W = 480
+const GRASS_H = 52
+const GROUND = GRASS_H
+
+type Blade = {
+  x: number
+  h: number
+  w: number
+  lean: number
+}
+
+/** Deterministic-ish variety from index (stable across renders). */
+function bladeAt(i: number, spacing: number, phase: number): Blade {
+  const n = Math.sin(i * 12.9898 + phase) * 43758.5453
+  const r = n - Math.floor(n)
+  const r2 = (Math.sin(i * 78.233 + phase * 2) * 43758.5453) % 1
+  const r3 = Math.abs(r2)
+  return {
+    x: i * spacing + (r - 0.5) * spacing * 0.55,
+    h: 18 + r * 30 + (i % 5) * 1.2,
+    w: 2.2 + r3 * 2.8,
+    lean: (r - 0.5) * 10,
+  }
+}
+
+function bladePath({ x, h, w, lean }: Blade) {
+  const tipX = x + w * 0.45 + lean
+  const tipY = GROUND - h
+  const midY = GROUND - h * 0.55
+  return [
+    `M${x.toFixed(1)} ${GROUND}`,
+    `C${(x + lean * 0.35).toFixed(1)} ${midY.toFixed(1)}`,
+    `${(tipX - w * 0.15).toFixed(1)} ${(tipY + h * 0.2).toFixed(1)}`,
+    `${tipX.toFixed(1)} ${tipY.toFixed(1)}`,
+    `C${(tipX + w * 0.2).toFixed(1)} ${(tipY + h * 0.22).toFixed(1)}`,
+    `${(x + w + lean * 0.25).toFixed(1)} ${midY.toFixed(1)}`,
+    `${(x + w).toFixed(1)} ${GROUND}`,
+    'Z',
+  ].join(' ')
+}
+
+const backBlades = Array.from({ length: 72 }, (_, i) => bladeAt(i, 6.7, 1.1))
+const midBlades = Array.from({ length: 64 }, (_, i) => {
+  const b = bladeAt(i, 7.5, 2.7)
+  return { ...b, h: b.h * 0.82, x: b.x + 3.2 }
+})
+const frontBlades = Array.from({ length: 58 }, (_, i) => {
+  const b = bladeAt(i, 8.3, 4.2)
+  return { ...b, h: b.h * 0.62, w: b.w * 0.9, x: b.x + 1.6 }
+})
+const tipBlades = Array.from({ length: 40 }, (_, i) => {
+  const b = bladeAt(i, 12, 5.5)
+  return { ...b, h: 10 + (b.h % 14), w: b.w * 0.75, x: b.x + 5 }
+})
+
 export function Footer() {
   return (
     <footer className="footer">
       <svg
         className="footer__grass"
-        viewBox="0 0 480 28"
+        viewBox={`0 0 ${GRASS_W} ${GRASS_H}`}
         preserveAspectRatio="none"
         aria-hidden="true"
         focusable="false"
       >
-        {/* Back layer — deeper green, taller blades */}
-        <g fill="#384f36">
-          <path d="M0 28c1.2-7 2.5-15 3.8-20 1.1 6 2.2 13 3.2 20H0z" />
-          <path d="M9 28c1.6-9 3.2-18 4.8-24 1.4 7 2.8 15 4 24H9z" />
-          <path d="M20 28c1-5 2-11 2.9-15 .9 5 1.8 10 2.6 15H20z" />
-          <path d="M28 28c1.8-10 3.6-19 5.4-25 1.5 8 3 16 4.2 25H28z" />
-          <path d="M40 28c1.1-6 2.2-12 3.1-17 1 6 1.9 11 2.7 17H40z" />
-          <path d="M49 28c1.5-8 3-16 4.4-22 1.3 7 2.6 14 3.6 22H49z" />
-          <path d="M60 28c.9-4 1.8-9 2.5-13 .8 5 1.5 9 2.2 13H60z" />
-          <path d="M68 28c1.7-9 3.4-18 5.1-24 1.4 7 2.8 15 4 24H68z" />
-          <path d="M80 28c1.2-7 2.4-13 3.4-18 1.1 6 2.1 12 3 18H80z" />
-          <path d="M90 28c1-5 2-10 2.8-14 .9 5 1.7 9 2.5 14H90z" />
-          <path d="M98 28c1.9-11 3.8-21 5.8-27 1.6 8 3.2 17 4.6 27H98z" />
-          <path d="M112 28c1.1-6 2.2-12 3.1-17 1 6 1.9 11 2.7 17H112z" />
-          <path d="M121 28c1.5-8 3-16 4.3-21 1.3 6 2.5 13 3.5 21H121z" />
-          <path d="M132 28c.9-4 1.7-9 2.4-12 .7 4 1.4 8 2.1 12H132z" />
-          <path d="M140 28c1.8-10 3.6-19 5.3-25 1.5 8 3 16 4.2 25H140z" />
-          <path d="M152 28c1.2-6 2.5-13 3.5-17 1.1 5 2.1 11 3 17H152z" />
-          <path d="M162 28c1-5 2-11 2.9-15 .9 5 1.8 10 2.5 15H162z" />
-          <path d="M170 28c1.9-11 3.8-21 5.7-26 1.6 8 3.2 16 4.5 26H170z" />
-          <path d="M184 28c1-5 2-10 2.8-14 .9 5 1.7 9 2.5 14H184z" />
-          <path d="M192 28c1.6-9 3.2-17 4.8-23 1.4 7 2.7 14 3.8 23H192z" />
-          <path d="M204 28c1.1-6 2.2-12 3.1-16 1 5 1.9 11 2.6 16H204z" />
-          <path d="M213 28c1.7-9 3.4-17 5-23 1.4 7 2.8 14 4 23H213z" />
-          <path d="M225 28c.9-4 1.7-8 2.4-12 .7 4 1.5 8 2.1 12H225z" />
-          <path d="M233 28c1.5-9 3-18 4.5-24 1.4 7 2.7 15 3.8 24H233z" />
-          <path d="M245 28c1.2-6 2.4-13 3.4-17 1 5 2 11 2.8 17H245z" />
-          <path d="M255 28c1-5 2-10 2.8-14 .9 5 1.7 9 2.5 14H255z" />
-          <path d="M263 28c1.9-11 3.9-21 5.9-27 1.6 8 3.3 17 4.7 27H263z" />
-          <path d="M277 28c1.1-6 2.1-12 3-16 .9 5 1.8 11 2.6 16H277z" />
-          <path d="M286 28c1.5-8 3-16 4.4-22 1.3 7 2.6 14 3.6 22H286z" />
-          <path d="M297 28c.9-4 1.7-9 2.4-12 .7 4 1.4 8 2.1 12H297z" />
-          <path d="M305 28c1.8-10 3.6-19 5.3-25 1.5 8 3 16 4.2 25H305z" />
-          <path d="M317 28c1.2-7 2.5-13 3.5-18 1.1 6 2.1 12 3 18H317z" />
-          <path d="M327 28c1-5 2-10 2.8-14 .9 5 1.7 9 2.5 14H327z" />
-          <path d="M335 28c1.8-10 3.6-19 5.3-25 1.5 8 3 16 4.2 25H335z" />
-          <path d="M349 28c1-5 2-11 2.8-15 .9 5 1.7 10 2.5 15H349z" />
-          <path d="M357 28c1.7-9 3.4-17 5-23 1.4 7 2.8 15 4 23H357z" />
-          <path d="M369 28c1.1-6 2.2-12 3.1-16 1 5 1.9 11 2.6 16H369z" />
-          <path d="M378 28c1.5-9 3-17 4.3-22 1.3 6 2.5 13 3.5 22H378z" />
-          <path d="M389 28c.9-4 1.7-8 2.4-12 .7 4 1.4 8 2.1 12H389z" />
-          <path d="M397 28c1.9-11 3.8-21 5.7-26 1.6 8 3.2 16 4.5 26H397z" />
-          <path d="M411 28c1.2-6 2.4-13 3.4-17 1 5 2 11 2.8 17H411z" />
-          <path d="M421 28c1-5 2-10 2.8-14 .9 5 1.7 9 2.5 14H421z" />
-          <path d="M429 28c1.7-9 3.4-18 5-24 1.4 7 2.8 15 4 24H429z" />
-          <path d="M441 28c1.1-6 2.1-12 3-16 .9 5 1.8 11 2.6 16H441z" />
-          <path d="M450 28c1.5-8 3-15 4.3-21 1.2 7 2.4 13 3.4 21H450z" />
-          <path d="M461 28c.9-4 1.7-9 2.4-12 .7 4 1.4 8 2.1 12H461z" />
-          <path d="M469 28c1.6-9 3.2-18 4.8-24 1.4 7 2.7 15 3.8 24H469z" />
+        {/* Deep forest back row — tallest */}
+        <g fill="#2a3d28">
+          {backBlades.map((b, i) => (
+            <path key={`b${i}`} d={bladePath(b)} />
+          ))}
         </g>
-        {/* Mid layer */}
-        <g fill="#4a6646" opacity="0.85">
-          <path d="M5 28c1.2-7 2.4-14 3.5-19 1 6 2 12 2.8 19H5z" />
-          <path d="M24 28c1.4-8 2.8-15 4-21 1.2 7 2.3 13 3.2 21H24z" />
-          <path d="M45 28c1-5 2-11 2.8-15 .9 5 1.7 10 2.5 15H45z" />
-          <path d="M65 28c1.5-9 3-17 4.4-23 1.3 7 2.5 14 3.5 23H65z" />
-          <path d="M86 28c1-6 2-12 2.8-16 1 5 1.8 10 2.6 16H86z" />
-          <path d="M108 28c1.4-8 2.9-16 4.1-21 1.2 6 2.4 13 3.4 21H108z" />
-          <path d="M136 28c1.2-7 2.4-14 3.4-18 1 5 2 11 2.8 18H136z" />
-          <path d="M158 28c1-5 2-10 2.8-14 .9 5 1.7 9 2.5 14H158z" />
-          <path d="M180 28c1.5-9 3-17 4.4-22 1.3 6 2.5 13 3.5 22H180z" />
-          <path d="M208 28c1-6 2-11 2.8-15 .9 5 1.7 10 2.5 15H208z" />
-          <path d="M229 28c1.4-8 2.9-16 4.1-21 1.2 6 2.4 13 3.4 21H229z" />
-          <path d="M251 28c1-5 2-10 2.8-13 .9 4 1.7 9 2.5 13H251z" />
-          <path d="M273 28c1.5-9 3.1-18 4.4-23 1.3 7 2.5 14 3.5 23H273z" />
-          <path d="M301 28c1-6 2-12 2.8-16 1 5 1.8 10 2.6 16H301z" />
-          <path d="M323 28c1.4-8 2.8-15 4-20 1.2 6 2.3 12 3.2 20H323z" />
-          <path d="M353 28c1-5 2-11 2.8-15 .9 5 1.7 10 2.5 15H353z" />
-          <path d="M373 28c1.5-9 3-17 4.4-22 1.3 6 2.5 13 3.5 22H373z" />
-          <path d="M393 28c1-6 2-11 2.8-15 .9 5 1.7 10 2.5 15H393z" />
-          <path d="M417 28c1.4-8 2.9-16 4.1-21 1.2 6 2.4 13 3.4 21H417z" />
-          <path d="M445 28c1-5 2-10 2.8-14 .9 5 1.7 9 2.5 14H445z" />
-          <path d="M465 28c1.4-8 2.8-15 4-20 1.2 6 2.3 12 3.2 20H465z" />
+        {/* Mid olive */}
+        <g fill="#3d5a3a" opacity="0.95">
+          {midBlades.map((b, i) => (
+            <path key={`m${i}`} d={bladePath(b)} />
+          ))}
         </g>
-        {/* Front tips — lighter sage, shorter */}
-        <g fill="#5c7a52" opacity="0.5">
-          <path d="M14 28c1-5 2-10 2.6-13 .7 4 1.4 8 2 13H14z" />
-          <path d="M36 28c1.2-6 2.4-12 3.3-16 1 5 1.8 10 2.6 16H36z" />
-          <path d="M56 28c.9-4 1.8-9 2.4-12 .7 4 1.4 8 2 12H56z" />
-          <path d="M76 28c1.3-7 2.6-13 3.6-17 1 5 1.9 10 2.7 17H76z" />
-          <path d="M102 28c1-5 2-10 2.6-13 .7 4 1.4 8 2 13H102z" />
-          <path d="M128 28c1.2-6 2.3-12 3.2-15 .9 4 1.7 9 2.5 15H128z" />
-          <path d="M148 28c.9-4 1.8-9 2.4-12 .7 4 1.4 8 2 12H148z" />
-          <path d="M176 28c1.3-7 2.5-13 3.5-17 1 5 1.9 10 2.7 17H176z" />
-          <path d="M200 28c1-5 1.9-10 2.5-13 .7 4 1.4 8 2 13H200z" />
-          <path d="M221 28c1.2-6 2.4-12 3.3-16 1 5 1.8 10 2.6 16H221z" />
-          <path d="M259 28c.9-4 1.8-9 2.4-12 .7 4 1.4 8 2 12H259z" />
-          <path d="M281 28c1.3-7 2.6-13 3.6-17 1 5 1.9 10 2.7 17H281z" />
-          <path d="M311 28c1-5 2-10 2.6-13 .7 4 1.4 8 2 13H311z" />
-          <path d="M345 28c1.2-6 2.3-12 3.2-15 .9 4 1.7 9 2.5 15H345z" />
-          <path d="M365 28c.9-4 1.8-9 2.4-12 .7 4 1.4 8 2 12H365z" />
-          <path d="M385 28c1.3-7 2.5-13 3.5-17 1 5 1.9 10 2.7 17H385z" />
-          <path d="M407 28c1-5 1.9-10 2.5-13 .7 4 1.4 8 2 13H407z" />
-          <path d="M437 28c1.2-6 2.4-12 3.3-16 1 5 1.8 10 2.6 16H437z" />
-          <path d="M457 28c.9-4 1.8-9 2.4-12 .7 4 1.4 8 2 12H457z" />
-          <path d="M476 28c1-5 1.8-9 2.4-12V28h-2.4z" />
+        {/* Sage front */}
+        <g fill="#5a7a52" opacity="0.9">
+          {frontBlades.map((b, i) => (
+            <path key={`f${i}`} d={bladePath(b)} />
+          ))}
+        </g>
+        {/* Bright tips — shorter accents */}
+        <g fill="#7a9a68" opacity="0.75">
+          {tipBlades.map((b, i) => (
+            <path key={`t${i}`} d={bladePath(b)} />
+          ))}
         </g>
       </svg>
 
@@ -120,10 +102,15 @@ export function Footer() {
         <p className="footer__credit">
           <span className="footer__credit-text">
             Developed by{' '}
-            <span className="footer__credit-brand">
+            <a
+              className="footer__credit-brand"
+              href="https://nordlyssolutions.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <strong>nordlys</strong>
               <NordlysMark className="footer__mark" />
-            </span>
+            </a>
           </span>
         </p>
       </div>
