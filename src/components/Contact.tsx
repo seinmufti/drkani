@@ -1,8 +1,28 @@
+import { useEffect, useState } from 'react'
 import { Footer } from './Footer'
 import { PlantPot } from './PlantPot'
 import './Contact.css'
 
+/** Desktop-only plant decor — skip mount on mobile so heavy PNGs never download. */
+function useDesktopDecor() {
+  const [show, setShow] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 901px)').matches,
+  )
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 901px)')
+    const onChange = () => setShow(mq.matches)
+    onChange()
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+
+  return show
+}
+
 export function Contact() {
+  const showPlants = useDesktopDecor()
+
   return (
     <section id="contact" className="contact section">
       <div className="container contact__grid">
@@ -36,17 +56,21 @@ export function Contact() {
             </div>
           </dl>
 
-          <div className="contact__plants" aria-hidden="true">
-            <PlantPot variant="small" className="contact__pot contact__pot--xs" />
-            <PlantPot variant="leafy" className="contact__pot contact__pot--lg" />
-            <PlantPot variant="round" className="contact__pot contact__pot--sm" />
-          </div>
+          {showPlants ? (
+            <div className="contact__plants" aria-hidden="true">
+              <PlantPot variant="small" className="contact__pot contact__pot--xs" />
+              <PlantPot variant="leafy" className="contact__pot contact__pot--lg" />
+              <PlantPot variant="round" className="contact__pot contact__pot--sm" />
+            </div>
+          ) : null}
         </div>
 
         <div className="contact__side">
-          <div className="contact__plants contact__plants--edge" aria-hidden="true">
-            <PlantPot variant="trail" className="contact__pot contact__pot--edge" />
-          </div>
+          {showPlants ? (
+            <div className="contact__plants contact__plants--edge" aria-hidden="true">
+              <PlantPot variant="trail" className="contact__pot contact__pot--edge" />
+            </div>
+          ) : null}
 
           <div className="contact__map">
             <iframe
