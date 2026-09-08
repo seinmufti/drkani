@@ -6,15 +6,14 @@ function resolveScrollTarget(hash: string): HTMLElement | null {
   return section
 }
 
-function scrollAfterMorseLine(section: HTMLElement, navH: number, isMobile: boolean) {
+function scrollAfterMorseLine(section: HTMLElement, navH: number) {
   let afterLine = section.getBoundingClientRect().top + window.scrollY
 
-  if (isMobile) {
-    const before = getComputedStyle(section, '::before')
-    const marginTop = parseFloat(before.marginTop) || 0
-    const height = parseFloat(before.height) || 0
-    afterLine += marginTop + height
-  }
+  const before = getComputedStyle(section, '::before')
+  const marginTop = parseFloat(before.marginTop) || 0
+  const height = parseFloat(before.height) || 0
+  const marginBottom = parseFloat(before.marginBottom) || 0
+  afterLine += marginTop + height + marginBottom
 
   window.scrollTo({ top: Math.max(0, afterLine - navH), behavior: 'smooth' })
 }
@@ -26,12 +25,12 @@ export function scrollToSectionHash(hash: string) {
 
   /*
    * Results, Credentials, Contact: land immediately under the Morse rule
-   * (not on the title). Mobile owns the rule via section::before.
+   * (not on the title). Morse sits in no-man's land above the content band.
    */
   if (hash === '#results' || hash === '#certificates' || hash === '#contact') {
     const section = document.querySelector(hash)
     if (!(section instanceof HTMLElement)) return
-    scrollAfterMorseLine(section, navH, isMobile)
+    scrollAfterMorseLine(section, navH)
     history.pushState(null, '', hash)
     return
   }

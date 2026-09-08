@@ -31,7 +31,7 @@
   --morse-block: calc(var(--morse-pad) * 2 + var(--morse-h));
   /*
    * One screen under sticky nav. Mobile (≤900px) overrides with svh.
-   * Content height = viewport − nav. Morse sections add --morse-block.
+   * Content band = viewport − nav. Morse block sits outside that band.
    */
   --section-screen: calc(100vh - var(--nav-h));
   --section-with-morse: calc(var(--section-screen) + var(--morse-block));
@@ -214,6 +214,32 @@ textarea {
   .section-intro {
     margin-top: clamp(0.45rem, 1.2vh, 0.75rem);
     font-size: clamp(0.9rem, 3.4vw, 1.02rem);
+  }
+}
+
+/*
+ * Desktop Morse rhythm — separator sits outside the 100vh content band.
+ * Total section = morse-block + section-screen; content starts after Morse.
+ */
+@media (min-width: 901px) {
+  .section:not(:first-of-type) {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .section:not(:first-of-type)::before {
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    flex: 0 0 auto;
+    display: block;
+    width: 100%;
+    height: var(--morse-h);
+    margin: var(--morse-pad) 0;
+    background: var(--morse-rule);
+    pointer-events: none;
   }
 }
 

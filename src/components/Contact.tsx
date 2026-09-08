@@ -58,7 +58,6 @@ export function Contact() {
 
           {showPlants ? (
             <div className="contact__plants" aria-hidden="true">
-              <PlantPot variant="small" className="contact__pot contact__pot--xs" />
               <PlantPot variant="leafy" className="contact__pot contact__pot--lg" />
               <PlantPot variant="round" className="contact__pot contact__pot--sm" />
             </div>

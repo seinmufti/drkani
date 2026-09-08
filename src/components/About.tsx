@@ -14,12 +14,8 @@ export function About() {
         <div className="about__copy">
           <div className="about__intro">
             <h1 className="about__name">Dr. Kani</h1>
+            <p className="about__role">Cosmetic &amp; Restorative Dentistry</p>
           </div>
-
-          <p className="about__role">Cosmetic &amp; Restorative Dentistry</p>
-
-          {/* Holds the old body footprint so hero proportions stay stable */}
-          <div className="about__spacer" aria-hidden="true" />
 
           <blockquote className="about__quote">
             <div className="about__quote-body">

@@ -3,11 +3,6 @@
     linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.55) 18%, rgba(255, 255, 255, 0.55) 82%, transparent 100%);
 }
 
-/* Separator lives on Introduction's ::after — avoid a double line (desktop) */
-#results.section::before {
-  content: none;
-}
-
 .results .section-head {
   margin-bottom: 1.25rem;
 }
@@ -79,5 +74,54 @@
   .results__grid > .ba {
     min-height: 0;
     overflow: visible;
+  }
+}
+
+/* Desktop: one screen under the sticky nav — do not alter mobile rules above */
+@media (min-width: 901px) {
+  #results.results.section {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: var(--section-with-morse);
+    min-height: var(--section-with-morse);
+    max-height: var(--section-with-morse);
+    overflow: hidden;
+    padding: 0;
+  }
+
+  #results.results.section > .container {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 var(--section-screen);
+    min-height: 0;
+    max-height: var(--section-screen);
+    height: var(--section-screen);
+    box-sizing: border-box;
+    padding-block: 2.5rem;
+  }
+
+  .results .section-head {
+    flex: 0 0 auto;
+  }
+
+  .results__grid {
+    flex: 1 1 0;
+    min-height: 0;
+    align-content: stretch;
+  }
+
+  .results__grid > .ba {
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #results .ba__frame {
+    flex: 1 1 0;
+    aspect-ratio: auto;
+    min-height: 0;
+    height: auto;
   }
 }
