@@ -1,6 +1,13 @@
+import type { MouseEvent } from 'react'
+import { scrollToSectionHash } from '../scrollToSection'
 import './About.css'
 
 export function About() {
+  const onBookClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    requestAnimationFrame(() => scrollToSectionHash('#contact'))
+  }
+
   return (
     <section id="introduction" className="about section">
       <div className="container about__grid">
@@ -21,7 +28,7 @@ export function About() {
             </div>
           </blockquote>
 
-          <a href="#contact" className="about__cta">
+          <a href="#contact" className="about__cta" onClick={onBookClick}>
             Book a consultation
           </a>
         </div>
