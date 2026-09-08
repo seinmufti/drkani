@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-08",
+  "canvasHex": "#ebebeb",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "shots": [
+    {
+      "name": "introduction",
+      "file": "snapshots\\_raw\\introduction.png"
+    },
+    {
+      "name": "menu-open",
+      "file": "snapshots\\_raw\\menu-open.png"
+    },
+    {
+      "name": "results",
+      "file": "snapshots\\_raw\\results.png"
+    },
+    {
+      "name": "credentials",
+      "file": "snapshots\\_raw\\credentials.png"
+    },
+    {
+      "name": "contact",
+      "file": "snapshots\\_raw\\contact.png"
+    }
+  ]
+}

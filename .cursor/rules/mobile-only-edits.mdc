@@ -1,0 +1,13 @@
+---
+description: All current visual/layout edits are mobile-only unless stated otherwise
+alwaysApply: true
+---
+
+# Mobile-only edits
+
+The user’s current work is **mobile only**. Unless they explicitly say desktop or both:
+
+- Put visual, layout, typography, and spacing changes inside `@media (max-width: 900px)` (or the project’s mobile breakpoint).
+- Leave desktop base styles unchanged.
+- Do not “improve” desktop while fixing mobile.
+- When in doubt, scope the change to mobile only.

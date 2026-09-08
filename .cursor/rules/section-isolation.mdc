@@ -1,0 +1,13 @@
+---
+description: Do not change earlier sections when editing a later one
+alwaysApply: true
+---
+
+# Section isolation
+
+When the user asks to work on a specific section (e.g. Results, Credentials, Contact):
+
+- Change only that section’s component, styles, and direct dependencies.
+- Do **not** modify sections that appear before it in the page order (Introduction → Results → Credentials → Contact).
+- Do not “fix up,” retune, or restyle prior sections unless the user explicitly asks.
+- Shared CSS (`index.css`, Morse, nav) may change only when required for the target section — and must not alter earlier sections’ layout or look.
