@@ -96,22 +96,21 @@ export function Footer() {
         <p className="footer__brand">kani</p>
 
         <p className="footer__copy">
-          © {new Date().getFullYear()} All rights reserved.
+          <span className="footer__copy-year">© {new Date().getFullYear()}</span>
+          <span className="footer__copy-rest">All rights reserved.</span>
         </p>
 
         <p className="footer__credit">
-          <span className="footer__credit-text">
-            Developed by{' '}
-            <a
-              className="footer__credit-brand"
-              href="https://nordlyssolutions.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <strong>nordlys</strong>
-              <NordlysMark className="footer__mark" />
-            </a>
-          </span>
+          <span className="footer__credit-label">Developed by</span>
+          <a
+            className="footer__credit-brand"
+            href="https://nordlyssolutions.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <strong>nordlys</strong>
+            <NordlysMark className="footer__mark" />
+          </a>
         </p>
       </div>
     </footer>

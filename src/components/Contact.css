@@ -263,7 +263,7 @@
     box-sizing: border-box;
     align-content: stretch;
     padding-top: 2svh;
-    padding-bottom: 7vh; /* map stretches to 7vh above grass */
+    padding-bottom: 9vh; /* map stretches to 9vh above grass */
   }
 
   .contact__copy,
