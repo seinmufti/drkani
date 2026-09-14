@@ -31,7 +31,7 @@
   background-color: #a85a3f;
   background-image:
     linear-gradient(rgba(70, 28, 18, 0.16), rgba(70, 28, 18, 0.1)),
-    url('/brick-wall.svg?v=redbrown');
+    url('/drkani/brick-wall.svg?v=redbrown');
   background-size: auto, 160px 80px;
   background-repeat: repeat;
   background-position: center top;
@@ -439,7 +439,7 @@
     background-color: #a85a3f;
     background-image:
       linear-gradient(rgba(70, 28, 18, 0.16), rgba(70, 28, 18, 0.1)),
-      url('/brick-wall.svg?v=redbrown');
+      url('/drkani/brick-wall.svg?v=redbrown');
     background-size: auto, 160px 80px;
     background-repeat: repeat;
     background-position: center top;

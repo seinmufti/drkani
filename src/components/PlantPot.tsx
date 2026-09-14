@@ -1,13 +1,15 @@
+import { publicUrl } from '../publicUrl'
+
 type PlantPotProps = {
   variant?: 'leafy' | 'trail' | 'round' | 'small'
   className?: string
 }
 
 const sources = {
-  leafy: '/plants/left.png?v=leaves',
-  round: '/plants/middle.png',
-  trail: '/plants/right.png?v=stem',
-  small: '/plants/small.png?v=leaves',
+  leafy: publicUrl('/plants/left.png?v=leaves'),
+  round: publicUrl('/plants/middle.png'),
+  trail: publicUrl('/plants/right.png?v=stem'),
+  small: publicUrl('/plants/small.png?v=leaves'),
 } as const
 
 const labels = {

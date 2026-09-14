@@ -1,6 +1,8 @@
 {
   "rewrites": [
     { "source": "/drkani/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/drkani/before-after/:path*", "destination": "/before-after/:path*" },
+    { "source": "/drkani/plants/:path*", "destination": "/plants/:path*" },
     { "source": "/drkani/:file.:ext", "destination": "/:file.:ext" },
     { "source": "/drkani", "destination": "/index.html" },
     { "source": "/drkani/:path*", "destination": "/index.html" },
