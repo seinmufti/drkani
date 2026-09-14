@@ -1,5 +1,9 @@
 {
   "rewrites": [
+    { "source": "/drkani/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/drkani/:file.:ext", "destination": "/:file.:ext" },
+    { "source": "/drkani", "destination": "/index.html" },
+    { "source": "/drkani/:path*", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
